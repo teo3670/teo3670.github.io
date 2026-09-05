@@ -6,272 +6,240 @@
 <title>Theodoros Drachtidis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Literata:opsz,wght@18..144,400;18..144,500;18..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#E9EDE6;
-    --paper-raised:#F4F6F1;
-    --ink:#182420;
-    --ink-soft:#4B564F;
-    --teal:#2F6E62;
-    --ochre:#C6892C;
-    --rust:#B0543A;
-    --line:#B7BFAF;
-    --line-soft:#D4D9CD;
+    --paper:#EDF0F3;
+    --paper-raised:#F7F8FA;
+    --grid:#D6DCE3;
+    --ink:#151B2E;
+    --ink-soft:#5B647A;
+    --navy:#1E3A5F;
+    --amber:#E2A73B;
+    --coral:#D2604A;
+    --line:#C7CDD6;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
   body{
-    background:var(--paper);
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:29px 29px;
     color:var(--ink);
-    font-family:'Literata', serif;
+    font-family:'Work Sans', sans-serif;
     font-size:17px;
-    line-height:1.6;
-    overflow-x:hidden;
+    line-height:1.65;
   }
-  ::selection{background:var(--ochre); color:var(--paper);}
+  ::selection{background:var(--amber); color:var(--ink);}
   a{color:inherit;}
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
+  .serif{font-family:'Instrument Serif', serif; font-weight:400;}
+  .mono{
+    font-family:'JetBrains Mono', monospace;
     font-size:12px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-  }
-  h1,h2,h3{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    letter-spacing:-0.01em;
+    letter-spacing:0.02em;
   }
 
-  /* ---------- Layout shell with chart-spine ---------- */
-  .frame{
-    max-width:1040px;
-    margin:0 auto;
-    padding:0 40px;
-    position:relative;
-  }
-  .spine{
-    position:absolute;
-    left:0;
-    top:0;
-    bottom:0;
-    width:1px;
-    background:var(--line);
-  }
-  .spine-dot{
-    position:absolute;
-    left:-4px;
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:var(--paper);
-    border:1.5px solid var(--teal);
-    transform:scale(0);
-    transition:transform 0.5s cubic-bezier(.34,1.56,.64,1);
-  }
-  .spine-dot.on{transform:scale(1);}
-  .spine-label{
-    position:absolute;
-    left:16px;
-    transform:translateY(-50%);
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--ink-soft);
-    white-space:nowrap;
-    opacity:0;
-    transition:opacity 0.6s ease 0.15s;
-  }
-  .spine-label.on{opacity:1;}
-  @media (max-width:760px){
-    .spine, .spine-label{display:none;}
-  }
+  .frame{max-width:980px; margin:0 auto; padding:0 40px;}
+  @media (max-width:700px){.frame{padding:0 22px;}}
 
-  section{
-    position:relative;
-    padding:96px 0 96px 44px;
-    border-bottom:1px solid var(--line-soft);
+  section{padding:88px 0;}
+  section + section{border-top:1px solid var(--line);}
+
+  /* ---------- Tab label (folder-tab motif) ---------- */
+  .tab{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-bottom:none;
+    border-radius:6px 6px 0 0;
+    padding:6px 14px 8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.03em;
+    color:var(--ink-soft);
+    margin-bottom:-1px;
   }
-  section:last-of-type{border-bottom:none;}
-  @media (max-width:760px){
-    section{padding:64px 0 64px 20px;}
-    .frame{padding:0 20px;}
-  }
+  .tab-dot{width:6px; height:6px; border-radius:50%; background:var(--coral);}
 
   /* ---------- Hero ---------- */
   .hero{
-    min-height:92vh;
+    min-height:88vh;
     display:flex;
     flex-direction:column;
     justify-content:center;
-    border-bottom:1px solid var(--line-soft);
-    padding-top:64px;
-    padding-bottom:64px;
+    padding-top:60px;
   }
-  .hero h1{
-    font-size:clamp(2.6rem, 6.5vw, 5rem);
-    line-height:0.98;
-    margin:18px 0 22px;
+  .hero-card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:0 10px 10px 10px;
+    padding:56px 52px;
+    box-shadow:0 1px 0 var(--line);
+    opacity:0;
+    animation:cardIn 0.7s ease forwards 0.15s;
   }
-  .hero h1 span{color:var(--teal);}
+  @keyframes cardIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .hero-card h1{
+    font-family:'Instrument Serif', serif;
+    font-weight:400;
+    font-size:clamp(3rem, 8vw, 5.6rem);
+    line-height:0.95;
+    margin:14px 0 22px;
+  }
+  .hero-card h1 em{font-style:italic; color:var(--navy);}
   .hero-sub{
     font-size:1.15rem;
     color:var(--ink-soft);
-    max-width:520px;
-    margin-bottom:36px;
+    max-width:46ch;
+    margin-bottom:30px;
   }
-  .hero-stats{
-    display:flex;
-    gap:40px;
-    flex-wrap:wrap;
-  }
-  .stat-num{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:1.6rem;
-    color:var(--rust);
-  }
-  .stat-lbl{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
+  .chip-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    padding:6px 12px;
+    border:1px solid var(--line);
+    border-radius:20px;
     color:var(--ink-soft);
-    text-transform:uppercase;
-    letter-spacing:0.08em;
+    background:var(--paper);
   }
-
-  /* ---------- Section heading pattern ---------- */
-  .sec-head{
-    display:flex;
-    align-items:baseline;
-    gap:14px;
-    margin-bottom:36px;
-  }
-  .sec-head h2{font-size:1.7rem;}
 
   /* ---------- About ---------- */
   .about-grid{
     display:grid;
     grid-template-columns:1.3fr 1fr;
-    gap:56px;
+    gap:50px;
+    align-items:start;
   }
   @media (max-width:700px){.about-grid{grid-template-columns:1fr;}}
-  .about-grid p{margin-bottom:16px; max-width:52ch;}
-  .fact-list{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
+  h2.serif{font-size:2.1rem; margin-bottom:22px;}
+  .about-grid p{max-width:54ch; margin-bottom:14px; color:var(--ink);}
+
+  .index-card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:0;
+    position:relative;
   }
-  .fact-list div{
+  .index-card::before{
+    content:"";
+    display:block;
+    height:5px;
+    background:var(--coral);
+  }
+  .index-card-body{padding:22px 24px;}
+  .fact{
     display:flex;
     justify-content:space-between;
-    border-bottom:1px dotted var(--line);
-    padding-bottom:8px;
-    gap:12px;
+    gap:14px;
+    padding:10px 0;
+    border-bottom:1px dashed var(--line);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
   }
-  .fact-list span:first-child{color:var(--ink-soft);}
+  .fact:last-child{border-bottom:none;}
+  .fact span:first-child{color:var(--ink-soft);}
+  .fact span:last-child{text-align:right;}
 
-  /* ---------- Work cards ---------- */
-  .cards{
+  /* ---------- Work grid (folder cards) ---------- */
+  .work-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:24px;
+    gap:22px;
   }
-  @media (max-width:700px){.cards{grid-template-columns:1fr;}}
-  .card{
+  @media (max-width:700px){.work-grid{grid-template-columns:1fr;}}
+  .folder{
     background:var(--paper-raised);
-    border:1px solid var(--line-soft);
-    border-radius:2px;
-    padding:28px;
-    transition:transform 0.25s ease, box-shadow 0.25s ease;
+    border:1px solid var(--line);
+    border-radius:0 8px 8px 8px;
+    padding:26px 26px 28px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .card:hover{
+  .folder:hover{
     transform:translateY(-3px);
-    box-shadow:0 10px 24px rgba(24,36,32,0.08);
+    box-shadow:0 12px 26px rgba(21,27,46,0.09);
   }
-  .card .tag{
-    display:inline-block;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    padding:3px 9px;
-    border-radius:20px;
-    margin-bottom:14px;
-  }
-  .tag.teal{background:rgba(47,110,98,0.12); color:var(--teal);}
-  .tag.rust{background:rgba(176,84,58,0.12); color:var(--rust);}
-  .tag.ochre{background:rgba(198,137,44,0.14); color:var(--ochre);}
-  .card h3{font-size:1.25rem; margin-bottom:10px;}
-  .card p{color:var(--ink-soft); font-size:0.98rem;}
+  .folder .tab{font-size:11px;}
+  .folder h3{font-family:'Instrument Serif', serif; font-weight:400; font-size:1.55rem; margin:14px 0 10px;}
+  .folder p{color:var(--ink-soft); font-size:0.98rem;}
+  .folder.c-amber .tab-dot{background:var(--amber);}
+  .folder.c-navy .tab-dot{background:var(--navy);}
+  .folder.c-coral .tab-dot{background:var(--coral);}
 
-  /* ---------- Skills ---------- */
-  .skill-groups{
+  /* ---------- Toolkit ---------- */
+  .toolkit-grid{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
-    gap:32px 56px;
+    gap:30px 50px;
   }
-  @media (max-width:700px){.skill-groups{grid-template-columns:1fr;}}
-  .skill-group h4{
-    font-family:'IBM Plex Mono', monospace;
+  @media (max-width:700px){.toolkit-grid{grid-template-columns:1fr;}}
+  .toolkit-group h4{
+    font-family:'JetBrains Mono', monospace;
     font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:0.08em;
+    letter-spacing:0.03em;
     color:var(--ink-soft);
     margin-bottom:12px;
   }
   .pill-row{display:flex; flex-wrap:wrap; gap:8px;}
   .pill{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:'JetBrains Mono', monospace;
     font-size:12.5px;
     padding:6px 12px;
     border:1px solid var(--line);
-    border-radius:20px;
-    color:var(--ink);
+    border-radius:4px;
+    background:var(--paper-raised);
   }
 
   /* ---------- Contact ---------- */
-  .contact h2{font-size:2.2rem; max-width:14ch; margin-bottom:20px;}
-  .contact-links{
+  .contact-card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:0 10px 10px 10px;
+    padding:48px;
+  }
+  @media (max-width:700px){.contact-card{padding:30px;}}
+  .contact-card h2{font-size:2.2rem; max-width:16ch; margin-bottom:16px;}
+  .contact-card p{color:var(--ink-soft); max-width:44ch; margin-bottom:26px;}
+  .contact-links{display:flex; flex-wrap:wrap; gap:14px;}
+  .icon-link{
     display:flex;
-    flex-direction:column;
-    gap:4px;
-    margin-top:28px;
-  }
-  .contact-links a{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:1.15rem;
-    font-weight:500;
+    align-items:center;
+    gap:9px;
+    padding:10px 16px;
+    border:1px solid var(--line);
+    border-radius:20px;
     text-decoration:none;
-    border-bottom:1px solid transparent;
-    width:fit-content;
-    padding-bottom:2px;
-    transition:border-color 0.2s ease, color 0.2s ease;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--ink);
+    background:var(--paper);
+    transition:border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
   }
-  .contact-links a:hover{border-color:var(--rust); color:var(--rust);}
+  .icon-link svg{width:15px; height:15px;}
+  .icon-link:hover{border-color:var(--coral); color:var(--coral); transform:translateY(-2px);}
+
   footer{
-    padding:28px 44px;
-    font-family:'IBM Plex Mono', monospace;
+    padding:30px 40px 40px;
+    font-family:'JetBrains Mono', monospace;
     font-size:11px;
     color:var(--ink-soft);
+    text-align:center;
   }
-
-  .reveal{
-    opacity:0;
-    transform:translateY(14px);
-    transition:opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.on{opacity:1; transform:translateY(0);}
 
   @media (prefers-reduced-motion: reduce){
-    *{transition:none !important; scroll-behavior:auto !important;}
-    .reveal{opacity:1; transform:none;}
-    .spine-dot, .spine-label{opacity:1; transform:none;}
+    *{animation:none !important; transition:none !important;}
+    .hero-card{opacity:1; transform:none;}
   }
 
-  a:focus-visible, .card:focus-visible{
-    outline:2px solid var(--teal);
+  a:focus-visible, .folder:focus-visible{
+    outline:2px solid var(--navy);
     outline-offset:3px;
   }
 </style>
@@ -279,79 +247,75 @@
 <body>
 
 <div class="frame">
-  <div class="spine" id="spine"></div>
 
   <!-- HERO -->
-  <section class="hero" data-spine="Start">
-    <p class="eyebrow">Athens, Greece — B.Sc. Management Science &amp; Technology, AUEB</p>
-    <h1>Theodoros<br><span>Drachtidis</span></h1>
-    <p class="hero-sub">I love data visualisation and infographics, and early-stage ventures. Currently second-year, building toward graduate study and my own projects in parallel.</p>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">2022</div>
-        <div class="stat-lbl">Freelance design since</div>
-      </div>
-      <div>
-        <div class="stat-num">Top</div>
-        <div class="stat-lbl">Placement, ERMIS AUEB</div>
-      </div>
-      <div>
-        <div class="stat-num">2nd</div>
-        <div class="stat-lbl">Year, MST @ AUEB</div>
+  <section class="hero">
+    <div class="tab"><span class="tab-dot"></span>PERSONAL FILE — OPEN</div>
+    <div class="hero-card">
+      <p class="mono" style="color:var(--ink-soft);">B.Sc. Management Science &amp; Technology, AUEB — 2nd year</p>
+      <h1>Theodoros<br><em>Drachtidis</em></h1>
+      <p class="hero-sub">I work at the point where data, design, and business meet — turning numbers into visuals, and ideas into ventures I'm building on the side.</p>
+      <div class="chip-row">
+        <span class="chip">Data visualization</span>
+        <span class="chip">Brand &amp; sports design</span>
+        <span class="chip">Early-stage ventures</span>
       </div>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section data-spine="About">
-    <div class="sec-head reveal">
-      <span class="eyebrow">01</span>
-      <h2>About</h2>
-    </div>
-    <div class="about-grid reveal">
+  <section>
+    <h2 class="serif">About</h2>
+    <div class="about-grid">
       <div>
-        <p>I'm a Management Science &amp; Technology student at the Athens University of Economics and Business, drawn to the point where data, design, and business strategy meet.</p>
-        <p>That's shown up as freelance sports design work, a data-visualization page about Greece, competition entries, and early-stage venture ideas I'm building on the side</p>
+        <p>I study Management Science &amp; Technology at the Athens University of Economics and Business, but most of what I've actually built has happened outside the curriculum: freelance design work, a data-visualization page followed for its clarity, and a couple of app ideas I keep pushing forward in my spare time.</p>
+        <p>What connects all of it is a preference for building my own thing over following someone else's brief — figuring out a problem, shaping it into something visual or usable, and shipping it.</p>
       </div>
-      <div class="fact-list">
-        <div><span>Program</span><span>DMST, AUEB</span></div>
-        <div><span>Standing</span><span>2nd year</span></div>
-        <div><span>Design work</span><span>Fiverr, 2022–2024</span></div>
-        <div><span>Publication</span><span>@hellenic_infographics</span></div>
-        <div><span>Competition</span><span>ERMIS AUEB — top placement</span></div>
-        <div><span>Next goal</span><span>Master's, top-10 EU university</span></div>
+      <div class="index-card">
+        <div class="index-card-body">
+          <div class="fact"><span>Program</span><span>MST, AUEB</span></div>
+          <div class="fact"><span>Standing</span><span>2nd year</span></div>
+          <div class="fact"><span>Design work</span><span>Fiverr, 2022–2024</span></div>
+          <div class="fact"><span>Publication</span><span>@hellenic_infographics</span></div>
+          <div class="fact"><span>Competition</span><span>ERMIS AUEB — top placement</span></div>
+          <div class="fact"><span>Next</span><span>Master's, top EU university</span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- WORK / HIGHLIGHTS -->
-  <section data-spine="Work">
-    <div class="sec-head reveal">
-      <span class="eyebrow">02</span>
-      <h2>Selected work</h2>
-    </div>
-    <div class="cards reveal">
-      <div class="card">
-        <span class="tag teal">Data visualization</span>
+  <!-- SELECTED WORK -->
+  <section>
+    <h2 class="serif">Selected work</h2>
+    <div class="work-grid">
+      <div class="folder c-navy">
+        <div class="tab"><span class="tab-dot"></span>DATA STORYTELLING</div>
         <h3>@hellenic_infographics</h3>
-        <p>An Instagram page turning statistics about Greece into clear, shareable visual stories — the project that ties my design and analytical interests together.</p>
+        <p>An Instagram page turning statistics about Greece into clear, shareable visual stories — where my design and analytical interests meet.</p>
       </div>
-      <div class="card">
-        <span class="tag ochre">Freelance design</span>
+      <div class="folder c-amber">
+        <div class="tab"><span class="tab-dot"></span>FREELANCE DESIGN</div>
         <h3>Sports design, Fiverr</h3>
-        <p>Two years of client design work in the sports niche — briefs, deadlines, and direct client feedback from 2022 to 2024.</p>
+        <p>Two years of client design work in the sports niche — briefs, deadlines, and direct feedback, from 2022 to 2024.</p>
+      </div>
+      <div class="folder c-coral">
+        <div class="tab"><span class="tab-dot"></span>VENTURES IN PROGRESS</div>
+        <h3>Two apps, early stage</h3>
+        <p>A pair of concepts I'm shaping on the side — one connects people for pickup basketball, the other supports blood donors. Both still in development.</p>
+      </div>
+      <div class="folder c-navy">
+        <div class="tab"><span class="tab-dot"></span>COMPETITION</div>
+        <h3>ERMIS AUEB</h3>
+        <p>Placed among the top teams in AUEB's flagship entrepreneurship competition, developing and pitching a venture concept end to end.</p>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section data-spine="Skills">
-    <div class="sec-head reveal">
-      <span class="eyebrow">03</span>
-      <h2>What I work with</h2>
-    </div>
-    <div class="skill-groups reveal">
-      <div class="skill-group">
+  <!-- TOOLKIT -->
+  <section>
+    <h2 class="serif">What I work with</h2>
+    <div class="toolkit-grid">
+      <div class="toolkit-group">
         <h4>Design</h4>
         <div class="pill-row">
           <span class="pill">Visual identity</span>
@@ -360,7 +324,7 @@
           <span class="pill">Brand assets</span>
         </div>
       </div>
-      <div class="skill-group">
+      <div class="toolkit-group">
         <h4>Business &amp; strategy</h4>
         <div class="pill-row">
           <span class="pill">Venture ideation</span>
@@ -369,7 +333,7 @@
           <span class="pill">Market research</span>
         </div>
       </div>
-      <div class="skill-group">
+      <div class="toolkit-group">
         <h4>Building</h4>
         <div class="pill-row">
           <span class="pill">Discord bots</span>
@@ -377,7 +341,7 @@
           <span class="pill">Data storytelling</span>
         </div>
       </div>
-      <div class="skill-group">
+      <div class="toolkit-group">
         <h4>Currently exploring</h4>
         <div class="pill-row">
           <span class="pill">Graduate study prep</span>
@@ -388,78 +352,34 @@
   </section>
 
   <!-- CONTACT -->
-  <section class="contact" data-spine="Contact">
-    <div class="sec-head reveal">
-      <span class="eyebrow">04</span>
-      <h2>Get in touch</h2>
-    </div>
-    <div class="reveal">
-      <p style="max-width:44ch; color:var(--ink-soft);">Open to employment oppportunities, venture conversations, or just talking data and ideas.</p>
+  <section>
+    <div class="tab"><span class="tab-dot"></span>GET IN TOUCH</div>
+    <div class="contact-card">
+      <h2 class="serif">Let's talk.</h2>
+      <p>Open to design work, venture conversations, or just talking data and ideas.</p>
       <div class="contact-links">
-        <a href="mailto:your.email@example.com">theodoredraht@gmail.com</a>
-        <a href="https://instagram.com/hellenic_infographics" target="_blank" rel="noopener">@hellenic_infographics</a>
-        <a href="www.linkedin.com/in/theodoros-drachtidis" target="_blank" rel="noopener">LinkedIn →</a>
+        <a class="icon-link" href="mailto:theodoredraht@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email
+        </a>
+        <a class="icon-link" href="https://linkedin.com/in/theodoros-drachtidis" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7.5 0h3.8v2.05h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V23h-4V8z"/></svg>
+          LinkedIn
+        </a>
+        <a class="icon-link" href="https://github.com/teo3670" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .31.2.67.8.56A10.52 10.52 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5Z"/></svg>
+          GitHub
+        </a>
+        <a class="icon-link" href="https://instagram.com/hellenic_infographics" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          Instagram
+        </a>
       </div>
     </div>
   </section>
 
-  <footer>
-  <div class="footer-icons">
-    <a href="https://github.com/teo3670" target="_blank" rel="noopener" aria-label="GitHub">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .31.2.67.8.56A10.52 10.52 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5Z"/></svg>
-    </a>
-    <a href="https://instagram.com/hellenic_infographics" target="_blank" rel="noopener" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-    </a>
-    <a href="mailto:theodoredraht@gmail.com" aria-label="Email">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-    </a>
-  </div>
-  Theodoros Drachtidis — built and maintained as an ongoing project - 2026
-</footer>
+  <footer>Theodoros Drachtidis — built and maintained as an ongoing project.</footer>
 </div>
-
-<script>
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('on'); });
-  }, {threshold:0.15});
-  reveals.forEach(el=>io.observe(el));
-
-  // Build the chart-spine: one dot + label per section, positioned to that section's top
-  const spine = document.getElementById('spine');
-  const sections = document.querySelectorAll('section[data-spine]');
-  function layoutSpine(){
-    spine.innerHTML = '';
-    const frameTop = document.querySelector('.frame').getBoundingClientRect().top + window.scrollY;
-    sections.forEach(sec=>{
-      const label = sec.getAttribute('data-spine');
-      const top = sec.getBoundingClientRect().top + window.scrollY - frameTop;
-      const dot = document.createElement('div');
-      dot.className = 'spine-dot';
-      dot.style.top = top + 'px';
-      const lbl = document.createElement('div');
-      lbl.className = 'spine-label';
-      lbl.style.top = top + 'px';
-      lbl.textContent = label;
-      spine.appendChild(dot);
-      spine.appendChild(lbl);
-    });
-  }
-  layoutSpine();
-  window.addEventListener('resize', layoutSpine);
-
-  const dotIo = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      const idx = Array.from(sections).indexOf(e.target);
-      const dot = spine.querySelectorAll('.spine-dot')[idx];
-      const lbl = spine.querySelectorAll('.spine-label')[idx];
-      if(e.isIntersecting){ dot && dot.classList.add('on'); lbl && lbl.classList.add('on'); }
-    });
-  }, {threshold:0.3});
-  sections.forEach(s=>dotIo.observe(s));
-</script>
 
 </body>
 </html>
