@@ -387,6 +387,9 @@
   .post-body h3{font-family:'Instrument Serif', serif; font-weight:400; font-size:2.2rem; margin-bottom:8px;}
   .post-date{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-soft); display:block; margin-bottom:24px;}
   .post-body p{margin-bottom:16px; max-width:60ch;}
+  .post-comments{margin-top:8px; padding-top:28px; border-top:1px solid var(--line);}
+  .post-comments .tab{margin-bottom:16px;}
+  .giscus-mount{min-height:60px;}
 
   footer{
     padding:30px 40px 40px;
@@ -569,10 +572,12 @@
 
 <script>
   // ---------- JOURNAL POSTS ----------
-  // To add a new post: copy one object below, change title/date/excerpt/content, add it to the TOP of the array.
+  // To add a new post: copy one object below, change title/date/excerpt/content/slug, add it to the TOP of the array.
+  // slug: a short unique id for the post (used to give it its own comment thread) — lowercase, no spaces, e.g. "my-new-post".
   // date: any short label you like, e.g. "Sep 2026". content: one string per paragraph.
   const journalPosts = [
     {
+      slug: "starting-this-journal",
       title: "Starting this journal",
       date: "Sep 2026",
       excerpt: "Why I'm adding a running log of what I'm building and thinking about to this site.",
@@ -582,7 +587,8 @@
       ]
     },
     {
-      title: "5 days ago or 5 years ago?",
+      slug: "starting-this-journal",
+      title: "Discovering the world of Mobile App Development",
       date: "Sep 2026",
       excerpt: "Why I'm adding a running log of what I'm building and thinking about to this site.",
       content: [
@@ -591,6 +597,39 @@
       ]
     }
   ];
+
+  // ---------- GISCUS COMMENTS ----------
+  // Fill these in from giscus.app after enabling GitHub Discussions on your repo.
+  const GISCUS_REPO = "teo3670/teo3670.github.io";
+  const GISCUS_REPO_ID = "R_kgDOT7vozg";
+  const GISCUS_CATEGORY = "Announcements";
+  const GISCUS_CATEGORY_ID = "DIC_kwDOT7vozs4DE_y7";
+
+  function loadGiscus(slug){
+    const mount = document.getElementById('giscusMount');
+    mount.innerHTML = '';
+    if(GISCUS_REPO_ID === "R_kgDOT7vozg"){
+      mount.innerHTML = '<p class="post-date">Comments will appear here once giscus is configured.</p>';
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', GISCUS_REPO);
+    script.setAttribute('data-repo-id', GISCUS_REPO_ID);
+    script.setAttribute('data-category', GISCUS_CATEGORY);
+    script.setAttribute('data-category-id', GISCUS_CATEGORY_ID);
+    script.setAttribute('data-mapping', 'specific');
+    script.setAttribute('data-term', slug);
+    script.setAttribute('data-strict', '1');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'noborder_light');
+    script.setAttribute('data-lang', 'en');
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+    mount.appendChild(script);
+  }
 
   const journalList = document.getElementById('journalList');
   const journalTabLabel = document.getElementById('journalTabLabel');
@@ -629,8 +668,10 @@
     postBody.innerHTML =
       '<h3>' + post.title + '</h3>' +
       '<span class="post-date">' + post.date + '</span>' +
-      post.content.map(p => '<p>' + p + '</p>').join('');
+      post.content.map(p => '<p>' + p + '</p>').join('') +
+      '<div class="post-comments"><div class="tab"><span class="tab-dot"></span>COMMENTS</div><div id="giscusMount" class="giscus-mount"></div></div>';
     postOverlay.classList.add('open');
+    loadGiscus(post.slug);
   }
   function closePost(){
     postOverlay.classList.remove('open');
