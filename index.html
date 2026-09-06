@@ -173,6 +173,98 @@
   .folder.c-navy .tab-dot{background:var(--navy);}
   .folder.c-coral .tab-dot{background:var(--coral);}
 
+  .folder-clickable{cursor:pointer;}
+  .folder-hint{
+    display:inline-block;
+    margin-top:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--coral);
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(21,27,46,0.78);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    z-index:100;
+  }
+  .lightbox-overlay.open{display:flex;}
+  .lightbox-panel{
+    background:var(--paper-raised);
+    border-radius:0 10px 10px 10px;
+    max-width:640px;
+    width:100%;
+    max-height:88vh;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  .lightbox-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .lightbox-top .tab{border:none; padding:0; background:none; margin:0;}
+  .lightbox-close{
+    background:none;
+    border:1px solid var(--line);
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:var(--ink-soft);
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px;
+  }
+  .lightbox-close:hover{border-color:var(--coral); color:var(--coral);}
+  .lightbox-imgwrap{
+    background:var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+  }
+  .lightbox-imgwrap img{
+    max-width:100%;
+    max-height:56vh;
+    object-fit:contain;
+    border-radius:2px;
+  }
+  .lightbox-caption{
+    padding:14px 18px 18px;
+    font-size:0.92rem;
+    color:var(--ink-soft);
+  }
+  .lightbox-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px 18px;
+  }
+  .lightbox-arrow{
+    background:none;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:7px 14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .lightbox-arrow:hover{border-color:var(--navy); color:var(--navy);}
+  .lightbox-count{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-soft);}
+
   /* ---------- Toolkit ---------- */
   .toolkit-grid{
     display:grid;
@@ -254,7 +346,7 @@
     <div class="hero-card">
       <p class="mono" style="color:var(--ink-soft);">B.Sc. Management Science &amp; Technology, AUEB — 2nd year</p>
       <h1>Theodoros<br><em>Drachtidis</em></h1>
-      <p class="hero-sub">I work at the point where data, design, and business meet turning numbers into visuals, and ideas into ventures I'm building on the side.</p>
+      <p class="hero-sub">I work at the point where data, design, and business meet — turning numbers into visuals, and ideas into ventures I'm building on the side.</p>
       <div class="chip-row">
         <span class="chip">Data visualization</span>
         <span class="chip">Early-stage ventures</span>
@@ -272,7 +364,7 @@
       </div>
       <div class="index-card">
         <div class="index-card-body">
-          <div class="fact"><span>Program</span><span>Management Science & Technology, AUEB</span></div>
+          <div class="fact"><span>Program</span><span>Management Science &amp; Technology, AUEB</span></div>
           <div class="fact"><span>Standing</span><span>2nd year</span></div>
           <div class="fact"><span>Research</span><span>BALab, AUEB</span></div>
           <div class="fact"><span>Publication</span><span>@hellenic_infographics</span></div>
@@ -286,10 +378,11 @@
   <section>
     <h2 class="serif">Selected work</h2>
     <div class="work-grid">
-      <div class="folder c-navy">
+      <div class="folder c-navy folder-clickable" id="hellenicCard" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open examples from @hellenic_infographics">
         <div class="tab"><span class="tab-dot"></span>DATA STORYTELLING</div>
         <h3>@hellenic_infographics</h3>
         <p>Since 2022, a page turning open data — from Wikipedia and other public sources — into maps and comparison graphics about Greece and beyond. Where my design and analytical interests meet.</p>
+        <span class="folder-hint">View 4 examples</span>
       </div>
       <div class="folder c-coral">
         <div class="tab"><span class="tab-dot"></span>VENTURES IN PROGRESS</div>
@@ -365,6 +458,76 @@
 
   <footer>Theodoros Drachtidis — built and maintained as an ongoing project.</footer>
 </div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="@hellenic_infographics examples">
+  <div class="lightbox-panel">
+    <div class="lightbox-top">
+      <div class="tab"><span class="tab-dot"></span>@HELLENIC_INFOGRAPHICS</div>
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="lightbox-imgwrap">
+      <img id="lightboxImg" src="" alt="">
+    </div>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+    <div class="lightbox-nav">
+      <button class="lightbox-arrow" id="lightboxPrev">&larr; Prev</button>
+      <span class="lightbox-count" id="lightboxCount"></span>
+      <button class="lightbox-arrow" id="lightboxNext">Next &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const hellenicImages = [
+    { src: 'assets/hellenic-startup-index-map.jpg', caption: 'Euro-Cities Startup Index 2026 — a ranked map of European startup ecosystems.' },
+    { src: 'assets/hellenic-startup-index-map-alt.jpg', caption: 'Euro-Cities Startup Index 2026 — same dataset, scaled by rank.' },
+    { src: 'assets/hellenic-startup-index-ranking.jpg', caption: 'Euro-Cities Startup Index 2026 — the full city-by-city ranking.' },
+    { src: 'assets/hellenic-greece-shrinking.jpg', caption: '"Greece is shrinking" — a decade of population change across Greek regions.' }
+  ];
+  let lbIndex = 0;
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxCount = document.getElementById('lightboxCount');
+  const hellenicCard = document.getElementById('hellenicCard');
+
+  function renderLightbox(){
+    const item = hellenicImages[lbIndex];
+    lightboxImg.src = item.src;
+    lightboxImg.alt = item.caption;
+    lightboxCaption.textContent = item.caption;
+    lightboxCount.textContent = (lbIndex + 1) + ' / ' + hellenicImages.length;
+  }
+  function openLightbox(i){
+    lbIndex = i;
+    renderLightbox();
+    lightbox.classList.add('open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+  }
+  function stepLightbox(delta){
+    lbIndex = (lbIndex + delta + hellenicImages.length) % hellenicImages.length;
+    renderLightbox();
+  }
+
+  hellenicCard.addEventListener('click', () => openLightbox(0));
+  hellenicCard.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLightbox(0); }
+  });
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', () => stepLightbox(-1));
+  document.getElementById('lightboxNext').addEventListener('click', () => stepLightbox(1));
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if(!lightbox.classList.contains('open')) return;
+    if(e.key === 'Escape') closeLightbox();
+    if(e.key === 'ArrowLeft') stepLightbox(-1);
+    if(e.key === 'ArrowRight') stepLightbox(1);
+  });
+</script>
 
 </body>
 </html>
