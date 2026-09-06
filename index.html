@@ -9,15 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#EDF0F3;
-    --paper-raised:#F7F8FA;
-    --grid:#D6DCE3;
-    --ink:#151B2E;
-    --ink-soft:#5B647A;
-    --navy:#1E3A5F;
-    --amber:#E2A73B;
-    --coral:#D2604A;
-    --line:#C7CDD6;
+    --paper:#F5F5F3;
+    --paper-raised:#FFFFFF;
+    --grid:#E2E2DF;
+    --ink:#141414;
+    --ink-soft:#63666B;
+    --line:#D6D6D3;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -31,7 +28,7 @@
     font-size:17px;
     line-height:1.65;
   }
-  ::selection{background:var(--amber); color:var(--ink);}
+  ::selection{background:var(--ink); color:var(--paper);}
   a{color:inherit;}
   .serif{font-family:'Instrument Serif', serif; font-weight:400;}
   .mono{
@@ -62,7 +59,7 @@
     color:var(--ink-soft);
     margin-bottom:-1px;
   }
-  .tab-dot{width:6px; height:6px; border-radius:50%; background:var(--coral);}
+  .tab-dot{width:6px; height:6px; border-radius:50%; background:var(--ink);}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -92,7 +89,7 @@
     line-height:0.95;
     margin:14px 0 22px;
   }
-  .hero-card h1 em{font-style:italic; color:var(--navy);}
+  .hero-card h1 em{font-style:italic; color:var(--ink);}
   .hero-sub{
     font-size:1.15rem;
     color:var(--ink-soft);
@@ -132,7 +129,7 @@
     content:"";
     display:block;
     height:5px;
-    background:var(--coral);
+    background:var(--ink);
   }
   .index-card-body{padding:22px 24px;}
   .fact{
@@ -169,17 +166,14 @@
   .folder .tab{font-size:11px;}
   .folder h3{font-family:'Instrument Serif', serif; font-weight:400; font-size:1.55rem; margin:14px 0 10px;}
   .folder p{color:var(--ink-soft); font-size:0.98rem;}
-  .folder.c-amber .tab-dot{background:var(--amber);}
-  .folder.c-navy .tab-dot{background:var(--navy);}
-  .folder.c-coral .tab-dot{background:var(--coral);}
-
   .folder-clickable{cursor:pointer;}
   .folder-hint{
     display:inline-block;
     margin-top:14px;
     font-family:'JetBrains Mono', monospace;
     font-size:11.5px;
-    color:var(--coral);
+    color:var(--ink);
+    border-bottom:1px solid var(--ink);
   }
 
   /* ---------- Lightbox ---------- */
@@ -227,7 +221,7 @@
     font-family:'JetBrains Mono', monospace;
     font-size:15px;
   }
-  .lightbox-close:hover{border-color:var(--coral); color:var(--coral);}
+  .lightbox-close:hover{border-color:var(--ink); color:var(--ink);}
   .lightbox-imgwrap{
     background:var(--paper);
     display:flex;
@@ -262,7 +256,7 @@
     cursor:pointer;
     color:var(--ink);
   }
-  .lightbox-arrow:hover{border-color:var(--navy); color:var(--navy);}
+  .lightbox-arrow:hover{border-color:var(--ink); color:var(--ink);}
   .lightbox-count{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-soft);}
 
   /* ---------- Toolkit ---------- */
@@ -315,7 +309,84 @@
     transition:border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
   }
   .icon-link svg{width:15px; height:15px;}
-  .icon-link:hover{border-color:var(--coral); color:var(--coral); transform:translateY(-2px);}
+  .icon-link:hover{border-color:var(--ink); color:var(--ink); transform:translateY(-2px);}
+
+  /* ---------- Journal ---------- */
+  .journal-list{display:flex; flex-direction:column;}
+  .journal-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:20px;
+    padding:22px 4px;
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+  }
+  .journal-item:first-child{border-top:1px solid var(--line);}
+  .journal-item:hover .journal-title{border-color:var(--ink);}
+  .journal-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .journal-main{flex:1;}
+  .journal-title{
+    font-family:'Instrument Serif', serif;
+    font-size:1.5rem;
+    border-bottom:1px solid transparent;
+    transition:border-color 0.2s ease;
+  }
+  .journal-excerpt{color:var(--ink-soft); font-size:0.96rem; margin-top:6px; max-width:60ch;}
+  .journal-empty{color:var(--ink-soft); font-size:0.96rem; padding:20px 4px;}
+
+  .post-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(20,20,20,0.78);
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding:60px 30px;
+    overflow-y:auto;
+    z-index:100;
+  }
+  .post-overlay.open{display:flex;}
+  .post-panel{
+    background:var(--paper-raised);
+    border-radius:0 10px 10px 10px;
+    max-width:680px;
+    width:100%;
+  }
+  .post-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .post-top .tab{border:none; padding:0; background:none; margin:0;}
+  .post-close{
+    background:none;
+    border:1px solid var(--line);
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:var(--ink-soft);
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px;
+  }
+  .post-close:hover{border-color:var(--ink); color:var(--ink);}
+  .post-body{padding:38px 44px 44px;}
+  @media (max-width:700px){.post-body{padding:26px;}}
+  .post-body h3{font-family:'Instrument Serif', serif; font-weight:400; font-size:2.2rem; margin-bottom:8px;}
+  .post-date{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-soft); display:block; margin-bottom:24px;}
+  .post-body p{margin-bottom:16px; max-width:60ch;}
 
   footer{
     padding:30px 40px 40px;
@@ -331,7 +402,7 @@
   }
 
   a:focus-visible, .folder:focus-visible{
-    outline:2px solid var(--navy);
+    outline:2px solid var(--ink);
     outline-offset:3px;
   }
 </style>
@@ -378,23 +449,30 @@
   <section>
     <h2 class="serif">Selected work</h2>
     <div class="work-grid">
-      <div class="folder c-navy folder-clickable" id="hellenicCard" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open examples from @hellenic_infographics">
+      <div class="folder folder-clickable" id="hellenicCard" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open examples from @hellenic_infographics">
         <div class="tab"><span class="tab-dot"></span>DATA STORYTELLING</div>
         <h3>@hellenic_infographics</h3>
         <p>Since 2022, a page turning open data — from Wikipedia and other public sources — into maps and comparison graphics about Greece and beyond. Where my design and analytical interests meet.</p>
         <span class="folder-hint">View 4 examples</span>
       </div>
-      <div class="folder c-coral">
+      <div class="folder">
         <div class="tab"><span class="tab-dot"></span>VENTURES IN PROGRESS</div>
         <h3>Two apps, early stage</h3>
         <p>A pair of concepts I'm shaping on the side — one connects people for pickup basketball, the other supports blood donors. Both still in development.</p>
       </div>
-      <div class="folder c-navy">
+      <div class="folder">
         <div class="tab"><span class="tab-dot"></span>CODE &amp; COMMUNITY</div>
         <h3>Discord bots &amp; side builds</h3>
         <p>Founder of two Discord communities, IcariaCord and HellenicTM, with custom bots for moderation and engagement. Ongoing coding projects live on GitHub.</p>
       </div>
     </div>
+  </section>
+
+  <!-- JOURNAL -->
+  <section>
+    <div class="tab"><span class="tab-dot"></span><span id="journalTabLabel">JOURNAL</span></div>
+    <h2 class="serif" style="margin-top:14px;">Journal</h2>
+    <div class="journal-list" id="journalList"></div>
   </section>
 
   <!-- TOOLKIT -->
@@ -459,6 +537,17 @@
   <footer>Theodoros Drachtidis — built and maintained as an ongoing project.</footer>
 </div>
 
+<!-- POST READER -->
+<div class="post-overlay" id="postOverlay" role="dialog" aria-modal="true" aria-label="Journal entry">
+  <div class="post-panel">
+    <div class="post-top">
+      <div class="tab"><span class="tab-dot"></span>JOURNAL ENTRY</div>
+      <button class="post-close" id="postClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="post-body" id="postBody"></div>
+  </div>
+</div>
+
 <!-- LIGHTBOX -->
 <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="@hellenic_infographics examples">
   <div class="lightbox-panel">
@@ -479,6 +568,82 @@
 </div>
 
 <script>
+  // ---------- JOURNAL POSTS ----------
+  // To add a new post: copy one object below, change title/date/excerpt/content, add it to the TOP of the array.
+  // date: any short label you like, e.g. "Sep 2026". content: one string per paragraph.
+  const journalPosts = [
+    {
+      title: "Starting this journal",
+      date: "Sep 2026",
+      excerpt: "Why I'm adding a running log of what I'm building and thinking about to this site.",
+      content: [
+        "I've had this site as a static portfolio for a while, but most of the interesting stuff — the half-finished ideas, the things I'm learning, the small wins — never made it anywhere public.",
+        "This is where that goes from now on. Short, infrequent, not polished."
+      ]
+    },
+    {
+      title: "5 days ago or 5 years ago?",
+      date: "Sep 2026",
+      excerpt: "Why I'm adding a running log of what I'm building and thinking about to this site.",
+      content: [
+        "I've had this site as a static portfolio for a while, but most of the interesting stuff — the half-finished ideas, the things I'm learning, the small wins — never made it anywhere public.",
+        "This is where that goes from now on. Short, infrequent, not polished."
+      ]
+    }
+  ];
+
+  const journalList = document.getElementById('journalList');
+  const journalTabLabel = document.getElementById('journalTabLabel');
+  const postOverlay = document.getElementById('postOverlay');
+  const postBody = document.getElementById('postBody');
+  const postClose = document.getElementById('postClose');
+
+  function renderJournal(){
+    journalTabLabel.textContent = 'JOURNAL — ' + journalPosts.length + (journalPosts.length === 1 ? ' ENTRY' : ' ENTRIES');
+    if(journalPosts.length === 0){
+      journalList.innerHTML = '<p class="journal-empty">Nothing posted yet.</p>';
+      return;
+    }
+    journalList.innerHTML = '';
+    journalPosts.forEach((post, i) => {
+      const item = document.createElement('div');
+      item.className = 'journal-item';
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.innerHTML =
+        '<div class="journal-main">' +
+          '<div class="journal-title">' + post.title + '</div>' +
+          '<div class="journal-excerpt">' + post.excerpt + '</div>' +
+        '</div>' +
+        '<div class="journal-date">' + post.date + '</div>';
+      item.addEventListener('click', () => openPost(i));
+      item.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openPost(i); }
+      });
+      journalList.appendChild(item);
+    });
+  }
+
+  function openPost(i){
+    const post = journalPosts[i];
+    postBody.innerHTML =
+      '<h3>' + post.title + '</h3>' +
+      '<span class="post-date">' + post.date + '</span>' +
+      post.content.map(p => '<p>' + p + '</p>').join('');
+    postOverlay.classList.add('open');
+  }
+  function closePost(){
+    postOverlay.classList.remove('open');
+  }
+  postClose.addEventListener('click', closePost);
+  postOverlay.addEventListener('click', (e) => { if(e.target === postOverlay) closePost(); });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && postOverlay.classList.contains('open')) closePost();
+  });
+
+  renderJournal();
+
+  // ---------- HELLENIC INFOGRAPHICS GALLERY ----------
   const hellenicImages = [
     { src: 'assets/hellenic-startup-index-map.jpg', caption: 'Euro-Cities Startup Index 2026 — a ranked map of European startup ecosystems.' },
     { src: 'assets/hellenic-startup-index-map-alt.jpg', caption: 'Euro-Cities Startup Index 2026 — same dataset, scaled by rank.' },
