@@ -4,559 +4,355 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Theodoros Drachtidis</title>
+<meta name="description" content="Theodoros Drachtidis — Management Science &amp; Technology student at AUEB, working at the point where data, design, and business meet.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F5F5F3;
-    --paper-raised:#FFFFFF;
-    --grid:#E2E2DF;
-    --ink:#141414;
-    --ink-soft:#63666B;
-    --line:#D6D6D3;
+    color-scheme:light;
+    --paper:#faf9f9;
+    --paper-raised:#f1eef4;
+    --ink:#201c24;
+    --ink-soft:#6e6779;
+    --edge:rgba(32,28,36,0.14);
+    --accent:#7a2e2e;
+    --accent-soft:#a24848;
+    --accent-wash:rgba(122,46,46,0.08);
+    --focus-ring:#7a2e2e;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  html.dark{
+    color-scheme:dark;
+    --paper:#16141a;
+    --paper-raised:#1e1b24;
+    --ink:#e9e6ed;
+    --ink-soft:#9c96a6;
+    --edge:rgba(233,230,237,0.14);
+    --accent:#e0a6a6;
+    --accent-soft:#c27a7a;
+    --accent-wash:rgba(224,166,166,0.1);
+    --focus-ring:#e0a6a6;
+  }
+  *, *::before, *::after{box-sizing:border-box;}
+  html, body, h1, h2, h3, p, ul, dl, dd{margin:0; padding:0;}
+  ul{list-style:none;}
+  img, svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer;}
+
+  @media (prefers-reduced-motion:no-preference){
+    html{scroll-behavior:smooth;}
+  }
+
+  html{background:var(--paper);}
   body{
-    background-color:var(--paper);
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size:29px 29px;
+    background:var(--paper);
     color:var(--ink);
-    font-family:'Work Sans', sans-serif;
-    font-size:17px;
-    line-height:1.65;
+    font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:0.9375rem;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    min-height:100dvh;
+    transition:background-color 0.2s, color 0.2s;
   }
   ::selection{background:var(--ink); color:var(--paper);}
-  a{color:inherit;}
-  .serif{font-family:'Instrument Serif', serif; font-weight:400;}
-  .mono{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.02em;
-  }
 
-  .frame{max-width:980px; margin:0 auto; padding:0 40px;}
-  @media (max-width:700px){.frame{padding:0 22px;}}
+  h1, h2, h3{font-weight:600; text-wrap:balance;}
+  p{text-wrap:pretty; max-width:62ch;}
+  a{text-decoration-line:underline; text-decoration-color:var(--edge); text-underline-offset:0.2em;}
+  a:hover{text-decoration-color:var(--accent); color:var(--accent);}
+  :focus-visible{outline:2px solid var(--focus-ring); outline-offset:3px; border-radius:2px;}
 
-  section{padding:88px 0;}
-  section + section{border-top:1px solid var(--line);}
+  .skip-link{position:fixed; top:1rem; left:1rem; z-index:100; background:var(--paper); border:1px solid var(--ink); padding:0.5rem 1rem; transform:translateY(-200%);}
+  .skip-link:focus{transform:translateY(0);}
 
-  /* ---------- Tab label (folder-tab motif) ---------- */
-  .tab{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-bottom:none;
-    border-radius:6px 6px 0 0;
-    padding:6px 14px 8px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
-    letter-spacing:0.03em;
-    color:var(--ink-soft);
-    margin-bottom:-1px;
-  }
-  .tab-dot{width:6px; height:6px; border-radius:50%; background:var(--ink);}
+  .page{width:min(100% - 3rem, 44rem); margin-inline:auto; padding-block:3.5rem 2.5rem;}
+  @media (max-width:600px){.page{width:min(100% - 2.5rem, 44rem); padding-block-start:2.25rem;}}
 
-  /* ---------- Hero ---------- */
-  .hero{
-    min-height:88vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding-top:60px;
-  }
-  .hero-card{
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-radius:0 10px 10px 10px;
-    padding:56px 52px;
-    box-shadow:0 1px 0 var(--line);
-    opacity:0;
-    animation:cardIn 0.7s ease forwards 0.15s;
-  }
-  @keyframes cardIn{
-    from{opacity:0; transform:translateY(10px);}
-    to{opacity:1; transform:translateY(0);}
-  }
-  .hero-card h1{
-    font-family:'Instrument Serif', serif;
-    font-weight:400;
-    font-size:clamp(3rem, 8vw, 5.6rem);
-    line-height:0.95;
-    margin:14px 0 22px;
-  }
-  .hero-card h1 em{font-style:italic; color:var(--ink);}
-  .hero-sub{
-    font-size:1.15rem;
-    color:var(--ink-soft);
-    max-width:46ch;
-    margin-bottom:30px;
-  }
-  .chip-row{display:flex; flex-wrap:wrap; gap:10px;}
-  .chip{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    padding:6px 12px;
-    border:1px solid var(--line);
-    border-radius:20px;
-    color:var(--ink-soft);
-    background:var(--paper);
-  }
+  /* ---------- Header ---------- */
+  .site-header{margin-block-end:3.25rem;}
+  .header-top{display:flex; justify-content:space-between; align-items:flex-start; gap:1.5rem;}
+  h1{font-size:clamp(1.2rem, 3.2vw, 1.5rem); letter-spacing:-0.02em;}
+  h1 em{font-style:italic; color:var(--accent);}
+  .theme-toggle{flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; width:2rem; height:2rem; color:var(--ink-soft); border-radius:4px;}
+  .theme-toggle:hover{color:var(--ink);}
+  .theme-toggle .icon{width:1.1rem; height:1.1rem;}
+  .theme-toggle .icon-moon{display:none;}
+  html.dark .theme-toggle .icon-sun{display:none;}
+  html.dark .theme-toggle .icon-moon{display:block;}
+  .tagline{margin-block-start:0.75rem; max-width:56ch; color:var(--ink);}
+  .location{color:var(--ink-soft); margin-block-start:0.4rem; font-size:0.85rem;}
+  .site-nav{margin-block-start:1.5rem; display:flex; flex-wrap:wrap; gap:0.4rem 1.4rem; font-size:0.8125rem; color:var(--ink-soft);}
+  .site-nav a{text-decoration-line:underline; padding-block:0.25rem;}
 
-  /* ---------- About ---------- */
-  .about-grid{
-    display:grid;
-    grid-template-columns:1.3fr 1fr;
-    gap:50px;
-    align-items:start;
-  }
-  @media (max-width:700px){.about-grid{grid-template-columns:1fr;}}
-  h2.serif{font-size:2.1rem; margin-bottom:22px;}
-  .about-grid p{max-width:54ch; margin-bottom:14px; color:var(--ink);}
+  /* ---------- Sections ---------- */
+  .section + .section{margin-block-start:3rem;}
+  .section h2{font-size:0.95rem; padding-block-end:0.65rem; margin-block-end:1.4rem; border-block-end:1px solid var(--edge);}
+  .about-text{color:var(--ink-soft); max-width:60ch;}
+  .about-text + .about-text{margin-block-start:0.9rem;}
 
-  .index-card{
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-radius:2px;
-    padding:0;
-    position:relative;
-  }
-  .index-card::before{
-    content:"";
-    display:block;
-    height:5px;
-    background:var(--ink);
-  }
-  .index-card-body{padding:22px 24px;}
-  .fact{
-    display:flex;
-    justify-content:space-between;
-    gap:14px;
-    padding:10px 0;
-    border-bottom:1px dashed var(--line);
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-  }
-  .fact:last-child{border-bottom:none;}
-  .fact span:first-child{color:var(--ink-soft);}
-  .fact span:last-child{text-align:right;}
+  .entry-list{display:grid; gap:1.75rem;}
+  .entry-head{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:0.25rem 1rem;}
+  .entry h3{font-size:0.9375rem;}
+  .entry-period, .entry-meta{color:var(--ink-soft); font-size:0.8125rem; white-space:nowrap;}
+  .entry-meta{margin-block-start:0.15rem;}
+  .entry-body{color:var(--ink-soft); margin-block-start:0.55rem;}
+  .entry-body + .entry-body{margin-block-start:0.75rem;}
+  .entry-tags{display:flex; flex-wrap:wrap; gap:0.4rem; margin-block-start:0.75rem;}
+  .entry-tags li{font-size:0.6875rem; color:var(--accent); background:var(--accent-wash); border:1px solid var(--edge); padding:0.15rem 0.55rem; border-radius:3px;}
+  .entry-hint{display:inline-block; margin-block-start:0.75rem; font-size:0.8125rem; text-decoration-line:underline;}
+  .entry-clickable{cursor:pointer;}
 
-  /* ---------- Work grid (folder cards) ---------- */
-  .work-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:22px;
-  }
-  @media (max-width:700px){.work-grid{grid-template-columns:1fr;}}
-  .folder{
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-radius:0 8px 8px 8px;
-    padding:26px 26px 28px;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .folder:hover{
-    transform:translateY(-3px);
-    box-shadow:0 12px 26px rgba(21,27,46,0.09);
-  }
-  .folder .tab{font-size:11px;}
-  .folder h3{font-family:'Instrument Serif', serif; font-weight:400; font-size:1.55rem; margin:14px 0 10px;}
-  .folder p{color:var(--ink-soft); font-size:0.98rem;}
-  .folder-clickable{cursor:pointer;}
-  .folder-hint{
-    display:inline-block;
-    margin-top:14px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
-    color:var(--ink);
-    border-bottom:1px solid var(--ink);
-  }
+  .subsection-title{margin-block:2.1rem 0.9rem; font-size:0.85rem; color:var(--ink-soft);}
 
-  /* ---------- Lightbox ---------- */
-  .lightbox-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(21,27,46,0.78);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:30px;
-    z-index:100;
-  }
-  .lightbox-overlay.open{display:flex;}
-  .lightbox-panel{
-    background:var(--paper-raised);
-    border-radius:0 10px 10px 10px;
-    max-width:640px;
-    width:100%;
-    max-height:88vh;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    position:relative;
-  }
-  .lightbox-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 18px;
-    border-bottom:1px solid var(--line);
-  }
-  .lightbox-top .tab{border:none; padding:0; background:none; margin:0;}
-  .lightbox-close{
-    background:none;
-    border:1px solid var(--line);
-    border-radius:50%;
-    width:30px;
-    height:30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    color:var(--ink-soft);
-    font-family:'JetBrains Mono', monospace;
-    font-size:15px;
-  }
-  .lightbox-close:hover{border-color:var(--ink); color:var(--ink);}
-  .lightbox-imgwrap{
-    background:var(--paper);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:18px;
-  }
-  .lightbox-imgwrap img{
-    max-width:100%;
-    max-height:56vh;
-    object-fit:contain;
-    border-radius:2px;
-  }
-  .lightbox-caption{
-    padding:14px 18px 18px;
-    font-size:0.92rem;
-    color:var(--ink-soft);
-  }
-  .lightbox-nav{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 18px 18px;
-  }
-  .lightbox-arrow{
-    background:none;
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:7px 14px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    cursor:pointer;
-    color:var(--ink);
-  }
-  .lightbox-arrow:hover{border-color:var(--ink); color:var(--ink);}
-  .lightbox-count{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-soft);}
+  /* ---------- About facts ---------- */
+  .fact-list{display:grid; gap:0.7rem; margin-block-start:1.5rem;}
+  .fact-row{display:grid; grid-template-columns:9rem 1fr; gap:0.5rem 1rem;}
+  .fact-row dt{color:var(--ink-soft); font-size:0.8125rem;}
+  .fact-row dd{margin:0;}
+  @media (max-width:500px){.fact-row{grid-template-columns:1fr; gap:0.15rem;}}
 
-  /* ---------- Toolkit ---------- */
-  .toolkit-grid{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:30px 50px;
-  }
-  @media (max-width:700px){.toolkit-grid{grid-template-columns:1fr;}}
-  .toolkit-group h4{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.03em;
-    color:var(--ink-soft);
-    margin-bottom:12px;
-  }
-  .pill-row{display:flex; flex-wrap:wrap; gap:8px;}
-  .pill{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    padding:6px 12px;
-    border:1px solid var(--line);
-    border-radius:4px;
-    background:var(--paper-raised);
-  }
-
-  /* ---------- Contact ---------- */
-  .contact-card{
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-radius:0 10px 10px 10px;
-    padding:48px;
-  }
-  @media (max-width:700px){.contact-card{padding:30px;}}
-  .contact-card h2{font-size:2.2rem; max-width:16ch; margin-bottom:16px;}
-  .contact-card p{color:var(--ink-soft); max-width:44ch; margin-bottom:26px;}
-  .contact-links{display:flex; flex-wrap:wrap; gap:14px;}
-  .icon-link{
-    display:flex;
-    align-items:center;
-    gap:9px;
-    padding:10px 16px;
-    border:1px solid var(--line);
-    border-radius:20px;
-    text-decoration:none;
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    color:var(--ink);
-    background:var(--paper);
-    transition:border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-  }
-  .icon-link svg{width:15px; height:15px;}
-  .icon-link:hover{border-color:var(--ink); color:var(--ink); transform:translateY(-2px);}
+  /* ---------- Skills ---------- */
+  .skills-list{display:grid; gap:0.85rem;}
+  .skills-row{display:grid; grid-template-columns:9rem 1fr; gap:0.5rem 1rem;}
+  .skills-row dt{color:var(--ink-soft); font-size:0.8125rem;}
+  .skills-row dd{margin:0;}
+  @media (max-width:500px){.skills-row{grid-template-columns:1fr; gap:0.15rem;}}
 
   /* ---------- Journal ---------- */
-  .journal-list{display:flex; flex-direction:column;}
-  .journal-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    gap:20px;
-    padding:22px 4px;
-    border-bottom:1px solid var(--line);
-    cursor:pointer;
-  }
-  .journal-item:first-child{border-top:1px solid var(--line);}
-  .journal-item:hover .journal-title{border-color:var(--ink);}
-  .journal-date{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    color:var(--ink-soft);
-    white-space:nowrap;
-    flex-shrink:0;
-  }
-  .journal-main{flex:1;}
-  .journal-title{
-    font-family:'Instrument Serif', serif;
-    font-size:1.5rem;
-    border-bottom:1px solid transparent;
-    transition:border-color 0.2s ease;
-  }
-  .journal-excerpt{color:var(--ink-soft); font-size:0.96rem; margin-top:6px; max-width:60ch;}
-  .journal-empty{color:var(--ink-soft); font-size:0.96rem; padding:20px 4px;}
+  .journal-list{display:grid; gap:1.5rem;}
+  .journal-item{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.25rem 1rem; cursor:pointer;}
+  .journal-item:hover .journal-title{color:var(--accent); text-decoration-color:var(--accent);}
+  .journal-main{flex:1; min-width:0;}
+  .journal-title{font-weight:600; text-decoration-line:underline; text-decoration-color:var(--edge);}
+  .journal-excerpt{color:var(--ink-soft); margin-block-start:0.35rem; font-size:0.875rem;}
+  .journal-date{color:var(--ink-soft); font-size:0.8125rem; white-space:nowrap;}
+  .journal-empty{color:var(--ink-soft); font-size:0.875rem;}
 
-  .post-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(20,20,20,0.78);
-    display:none;
-    align-items:flex-start;
-    justify-content:center;
-    padding:60px 30px;
-    overflow-y:auto;
-    z-index:100;
-  }
-  .post-overlay.open{display:flex;}
-  .post-panel{
-    background:var(--paper-raised);
-    border-radius:0 10px 10px 10px;
-    max-width:680px;
-    width:100%;
-  }
-  .post-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 18px;
-    border-bottom:1px solid var(--line);
-  }
-  .post-top .tab{border:none; padding:0; background:none; margin:0;}
-  .post-close{
-    background:none;
-    border:1px solid var(--line);
-    border-radius:50%;
-    width:30px;
-    height:30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    color:var(--ink-soft);
-    font-family:'JetBrains Mono', monospace;
-    font-size:15px;
-  }
-  .post-close:hover{border-color:var(--ink); color:var(--ink);}
-  .post-body{padding:38px 44px 44px;}
-  @media (max-width:700px){.post-body{padding:26px;}}
-  .post-body h3{font-family:'Instrument Serif', serif; font-weight:400; font-size:2.2rem; margin-bottom:8px;}
-  .post-date{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-soft); display:block; margin-bottom:24px;}
-  .post-body p{margin-bottom:16px; max-width:60ch;}
-  .post-comments{margin-top:8px; padding-top:28px; border-top:1px solid var(--line);}
-  .post-comments .tab{margin-bottom:16px;}
-  .giscus-mount{min-height:60px;}
+  /* ---------- Contact ---------- */
+  .contact-intro{color:var(--ink-soft); margin-block-end:1.5rem;}
+  .contact-email-row{display:flex; align-items:center; gap:0.6rem;}
+  .contact-email a{text-decoration-line:underline; overflow-wrap:anywhere;}
+  .copy-email-button{position:relative; width:2rem; height:2rem; display:grid; place-items:center; color:var(--ink-soft); border-radius:4px; flex-shrink:0;}
+  .copy-email-button:hover{color:var(--ink);}
+  .copy-email-button .icon{width:1rem; height:1rem; grid-area:1/1; transition:opacity 0.15s, scale 0.15s;}
+  .copy-email-button .icon-check{opacity:0; scale:0.7;}
+  .copy-email-button[data-copied="true"] .icon-copy{opacity:0; scale:0.7;}
+  .copy-email-button[data-copied="true"] .icon-check{opacity:1; scale:1; color:var(--accent);}
+  .copy-status{margin-block-start:0.5rem; font-size:0.78rem; color:var(--accent-soft); min-height:1.2em;}
+  .contact-links{margin-block-start:1.5rem; display:flex; flex-wrap:wrap; gap:0.4rem 1.4rem; font-size:0.8125rem;}
+  .contact-links a, .project-links a{text-decoration-line:underline; padding-block:0.2rem; display:inline-block;}
+  .ext-icon{margin-inline-start:0.15rem;}
 
-  footer{
-    padding:30px 40px 40px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    color:var(--ink-soft);
-    text-align:center;
-  }
+  /* ---------- Overlays (post reader / gallery) ---------- */
+  .overlay{position:fixed; inset:0; background:rgba(10,9,12,0.72); display:none; align-items:flex-start; justify-content:center; padding:4.5rem 1.5rem; overflow-y:auto; z-index:100;}
+  .overlay.open{display:flex;}
+  .overlay-panel{background:var(--paper-raised); border:1px solid var(--edge); border-radius:6px; max-width:38rem; width:100%;}
+  .overlay-top{display:flex; align-items:center; justify-content:space-between; padding:0.9rem 1.2rem; border-bottom:1px solid var(--edge); font-size:0.75rem; color:var(--ink-soft); letter-spacing:0.03em;}
+  .overlay-close{width:1.9rem; height:1.9rem; display:grid; place-items:center; border:1px solid var(--edge); border-radius:50%; color:var(--ink-soft); font-size:1rem;}
+  .overlay-close:hover{border-color:var(--accent); color:var(--accent);}
+  .overlay-body{padding:1.7rem 1.8rem 2rem;}
+  @media (max-width:600px){.overlay-body{padding:1.3rem;}}
+  .overlay-body h3{font-size:1.25rem; margin-block-end:0.4rem;}
+  .overlay-date{display:block; color:var(--ink-soft); font-size:0.8125rem; margin-block-end:1.3rem;}
+  .overlay-body p{margin-block-end:0.9rem; max-width:60ch; color:var(--ink-soft);}
+  .overlay-comments{margin-block-start:0.5rem; padding-block-start:1.5rem; border-top:1px solid var(--edge);}
+  .overlay-comments .overlay-label{display:block; margin-block-end:1rem; font-size:0.75rem; color:var(--ink-soft); letter-spacing:0.03em;}
+  .giscus-mount{min-height:3.5rem;}
 
-  @media (prefers-reduced-motion: reduce){
+  .lightbox-imgwrap{background:var(--paper); display:flex; align-items:center; justify-content:center; padding:1rem;}
+  .lightbox-imgwrap img{max-width:100%; max-height:52vh; object-fit:contain; border-radius:2px;}
+  .lightbox-caption{padding:0 1.2rem 1rem; font-size:0.85rem; color:var(--ink-soft);}
+  .lightbox-nav{display:flex; align-items:center; justify-content:space-between; padding:0 1.2rem 1.2rem;}
+  .lightbox-arrow{border:1px solid var(--edge); border-radius:4px; padding:0.4rem 0.85rem; font-size:0.78rem; color:var(--ink);}
+  .lightbox-arrow:hover{border-color:var(--accent); color:var(--accent);}
+  .lightbox-count{font-size:0.78rem; color:var(--ink-soft);}
+
+  /* ---------- Footer ---------- */
+  .site-footer{margin-block-start:3.5rem; padding-block-start:1.25rem; border-block-start:1px solid var(--edge); display:flex; flex-wrap:wrap; justify-content:space-between; gap:0.75rem; color:var(--ink-soft); font-size:0.75rem;}
+  .site-footer a{text-decoration-line:underline;}
+
+  @media (prefers-reduced-motion:no-preference){
+    .site-header, .section{animation:rise 0.6s ease both;}
+    .site-header{animation-delay:0s;}
+    .section:nth-of-type(1){animation-delay:0.06s;}
+    .section:nth-of-type(2){animation-delay:0.1s;}
+    .section:nth-of-type(3){animation-delay:0.14s;}
+    .section:nth-of-type(4){animation-delay:0.18s;}
+    .section:nth-of-type(5){animation-delay:0.22s;}
+    @keyframes rise{
+      0%{opacity:0; transform:translateY(6px);}
+      100%{opacity:1; transform:translateY(0);}
+    }
+  }
+  @media (prefers-reduced-motion:reduce){
     *{animation:none !important; transition:none !important;}
-    .hero-card{opacity:1; transform:none;}
-  }
-
-  a:focus-visible, .folder:focus-visible{
-    outline:2px solid var(--ink);
-    outline-offset:3px;
   }
 </style>
 </head>
 <body>
 
-<div class="frame">
+<a class="skip-link" href="#main-content">Skip to content</a>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="tab"><span class="tab-dot"></span>PERSONAL FILE — OPEN</div>
-    <div class="hero-card">
-      <p class="mono" style="color:var(--ink-soft);">B.Sc. Management Science &amp; Technology, AUEB — 2nd year</p>
-      <h1>Theodoros<br><em>Drachtidis</em></h1>
-      <p class="hero-sub">I work at the point where data, design, and business meet — turning numbers into visuals, and ideas into ventures I'm building on the side.</p>
-      <div class="chip-row">
-        <span class="chip">Data visualization</span>
-        <span class="chip">Early-stage ventures</span>
-      </div>
+<div class="page" id="top">
+
+  <header class="site-header">
+    <div class="header-top">
+      <h1>Theodoros <em>Drachtidis</em></h1>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" data-theme-toggle>
+        <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"></path>
+        </svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path>
+        </svg>
+      </button>
     </div>
-  </section>
 
-  <!-- ABOUT -->
-  <section>
-    <h2 class="serif">About</h2>
-    <div class="about-grid">
-      <div>
-        <p>I study Management Science &amp; Technology at the Athens University of Economics and Business, but most of what I've actually built has happened outside the curriculum: freelance design work, a data-visualization page followed for its clarity, a couple of app ideas I keep pushing forward, and now a research role in the department's Business Analytics Lab.</p>
-        <p>What connects all of it is a preference for building my own thing over following someone else's brief — figuring out a problem, shaping it into something visual or usable, and shipping it.</p>
+    <p class="tagline">B.Sc. Management Science &amp; Technology, AUEB — 2nd year. Working at the point where data, design, and business meet.</p>
+    <p class="location">Athens, Greece.</p>
+
+    <nav aria-label="Primary" class="site-nav">
+      <a href="#about">About</a>
+      <a href="#work">Selected work</a>
+      <a href="#journal">Journal</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+
+    <!-- ABOUT -->
+    <section id="about" class="section" aria-labelledby="about-title">
+      <h2 id="about-title">About</h2>
+      <p class="about-text">I study Management Science &amp; Technology at the Athens University of Economics and Business, but most of what I've actually built has happened outside the curriculum: freelance design work, a data-visualization page followed for its clarity, a couple of app ideas I keep pushing forward, and now a research role in the department's Business Analytics Lab.</p>
+      <p class="about-text">What connects all of it is a preference for building my own thing over following someone else's brief — figuring out a problem, shaping it into something visual or usable, and shipping it.</p>
+
+      <dl class="fact-list">
+        <div class="fact-row"><dt>Program</dt><dd>Management Science &amp; Technology, AUEB</dd></div>
+        <div class="fact-row"><dt>Standing</dt><dd>2nd year</dd></div>
+        <div class="fact-row"><dt>Research</dt><dd>BALab, AUEB</dd></div>
+        <div class="fact-row"><dt>Publication</dt><dd>@hellenic_infographics</dd></div>
+        <div class="fact-row"><dt>Next</dt><dd>Master's, top EU university</dd></div>
+      </dl>
+    </section>
+
+    <!-- SELECTED WORK -->
+    <section id="work" class="section" aria-labelledby="work-title">
+      <h2 id="work-title">Selected work</h2>
+
+      <div class="entry-list">
+
+        <article class="entry entry-clickable" id="hellenicCard" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open examples from @hellenic_infographics">
+          <h3>@hellenic_infographics</h3>
+          <p class="entry-body">Since 2022, a page turning open data — from Wikipedia and other public sources — into maps and comparison graphics about Greece and beyond. Where my design and analytical interests meet.</p>
+          <ul class="entry-tags" aria-label="Focus">
+            <li>data storytelling</li><li>maps</li><li>Greece</li>
+          </ul>
+          <span class="entry-hint">View 4 examples ↗</span>
+        </article>
+
+        <article class="entry">
+          <h3>Two apps, early stage</h3>
+          <p class="entry-body">A pair of concepts I'm shaping on the side — one connects people for pickup basketball, the other supports blood donors. Both still in development.</p>
+          <ul class="entry-tags" aria-label="Focus">
+            <li>ventures</li><li>mobile</li>
+          </ul>
+        </article>
+
+        <article class="entry">
+          <h3>Discord bots &amp; side builds</h3>
+          <p class="entry-body">Founder of two Discord communities, IcariaCord and HellenicTM, with custom bots for moderation and engagement. Ongoing coding projects live on GitHub.</p>
+          <ul class="entry-tags" aria-label="Focus">
+            <li>code</li><li>community</li>
+          </ul>
+        </article>
+
       </div>
-      <div class="index-card">
-        <div class="index-card-body">
-          <div class="fact"><span>Program</span><span>Management Science &amp; Technology, AUEB</span></div>
-          <div class="fact"><span>Standing</span><span>2nd year</span></div>
-          <div class="fact"><span>Research</span><span>BALab, AUEB</span></div>
-          <div class="fact"><span>Publication</span><span>@hellenic_infographics</span></div>
-          <div class="fact"><span>Next</span><span>Master's, top EU university</span></div>
+    </section>
+
+    <!-- JOURNAL -->
+    <section id="journal" class="section" aria-labelledby="journal-title">
+      <h2 id="journal-title"><span id="journalTitleLabel">Journal</span></h2>
+      <div class="journal-list" id="journalList"></div>
+    </section>
+
+    <!-- TOOLKIT -->
+    <section id="toolkit" class="section" aria-labelledby="toolkit-title">
+      <h2 id="toolkit-title">What I work with</h2>
+      <dl class="skills-list">
+        <div class="skills-row">
+          <dt>Business &amp; strategy</dt>
+          <dd>Venture ideation, business planning, pitching, market research</dd>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SELECTED WORK -->
-  <section>
-    <h2 class="serif">Selected work</h2>
-    <div class="work-grid">
-      <div class="folder folder-clickable" id="hellenicCard" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open examples from @hellenic_infographics">
-        <div class="tab"><span class="tab-dot"></span>DATA STORYTELLING</div>
-        <h3>@hellenic_infographics</h3>
-        <p>Since 2022, a page turning open data — from Wikipedia and other public sources — into maps and comparison graphics about Greece and beyond. Where my design and analytical interests meet.</p>
-        <span class="folder-hint">View 4 examples</span>
-      </div>
-      <div class="folder">
-        <div class="tab"><span class="tab-dot"></span>VENTURES IN PROGRESS</div>
-        <h3>Two apps, early stage</h3>
-        <p>A pair of concepts I'm shaping on the side — one connects people for pickup basketball, the other supports blood donors. Both still in development.</p>
-      </div>
-      <div class="folder">
-        <div class="tab"><span class="tab-dot"></span>CODE &amp; COMMUNITY</div>
-        <h3>Discord bots &amp; side builds</h3>
-        <p>Founder of two Discord communities, IcariaCord and HellenicTM, with custom bots for moderation and engagement. Ongoing coding projects live on GitHub.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- JOURNAL -->
-  <section>
-    <div class="tab"><span class="tab-dot"></span><span id="journalTabLabel">JOURNAL</span></div>
-    <h2 class="serif" style="margin-top:14px;">Journal</h2>
-    <div class="journal-list" id="journalList"></div>
-  </section>
-
-  <!-- TOOLKIT -->
-  <section>
-    <h2 class="serif">What I work with</h2>
-    <div class="toolkit-grid">
-      <div class="toolkit-group">
-        <h4>Business &amp; strategy</h4>
-        <div class="pill-row">
-          <span class="pill">Venture ideation</span>
-          <span class="pill">Business planning</span>
-          <span class="pill">Pitching</span>
-          <span class="pill">Market research</span>
+        <div class="skills-row">
+          <dt>Building</dt>
+          <dd>Mobile applications, web basics</dd>
         </div>
-      </div>
-      <div class="toolkit-group">
-        <h4>Building</h4>
-        <div class="pill-row">
-          <span class="pill">Mobile Applications</span>
-          <span class="pill">Web basics</span>
+        <div class="skills-row">
+          <dt>Currently exploring</dt>
+          <dd>Graduate study prep, product design, programming languages, academic research</dd>
         </div>
-      </div>
-      <div class="toolkit-group">
-        <h4>Currently exploring</h4>
-        <div class="pill-row">
-          <span class="pill">Graduate study prep</span>
-          <span class="pill">Product design</span>
-          <span class="pill">Programming Languages</span>
-          <span class="pill">Academic Research</span>
-        </div>
-      </div>
-    </div>
-  </section>
+      </dl>
+    </section>
 
-  <!-- CONTACT -->
-  <section>
-    <div class="tab"><span class="tab-dot"></span>GET IN TOUCH</div>
-    <div class="contact-card">
-      <h2 class="serif">Let's talk.</h2>
-      <p>Open to venture conversations, or just talking data and ideas.</p>
-      <div class="contact-links">
-        <a class="icon-link" href="mailto:theodoredraht@gmail.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-          Email
-        </a>
-        <a class="icon-link" href="https://linkedin.com/in/theodoros-drachtidis" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7.5 0h3.8v2.05h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V23h-4V8z"/></svg>
-          LinkedIn
-        </a>
-        <a class="icon-link" href="https://github.com/teo3670" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .31.2.67.8.56A10.52 10.52 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5Z"/></svg>
-          GitHub
-        </a>
-        <a class="icon-link" href="https://instagram.com/drachtidis_" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-          Instagram
-        </a>
-      </div>
-    </div>
-  </section>
+    <!-- CONTACT -->
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact</h2>
+      <p class="contact-intro">Open to venture conversations, or just talking data and ideas.</p>
 
-  <footer>Theodoros Drachtidis — built and maintained as an ongoing project.</footer>
+      <div class="contact-email-row">
+        <p class="contact-email">
+          <a href="mailto:theodoredraht@gmail.com">theodoredraht@gmail.com</a>
+        </p>
+        <button type="button" class="copy-email-button" data-copy-email aria-label="Copy email address">
+          <svg class="icon icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="9" y="9" width="11" height="11" rx="1.4"></rect>
+            <path d="M5 15V5.6C5 5 5.6 4.5 6.2 4.5H15"></path>
+          </svg>
+          <svg class="icon icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4.5 12.5l5 5 10-11"></path>
+          </svg>
+        </button>
+      </div>
+      <p class="copy-status" role="status" aria-live="polite"></p>
+
+      <ul class="contact-links">
+        <li><a href="https://linkedin.com/in/theodoros-drachtidis" target="_blank" rel="noopener noreferrer">LinkedIn<span class="ext-icon" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://github.com/teo3670" target="_blank" rel="noopener noreferrer">GitHub<span class="ext-icon" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://instagram.com/drachtidis_" target="_blank" rel="noopener noreferrer">Instagram<span class="ext-icon" aria-hidden="true">↗</span></a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Theodoros Drachtidis</p>
+    <a href="#top">Back to top<span aria-hidden="true"> ↑</span></a>
+  </footer>
+
 </div>
 
 <!-- POST READER -->
-<div class="post-overlay" id="postOverlay" role="dialog" aria-modal="true" aria-label="Journal entry">
-  <div class="post-panel">
-    <div class="post-top">
-      <div class="tab"><span class="tab-dot"></span>JOURNAL ENTRY</div>
-      <button class="post-close" id="postClose" aria-label="Close">&times;</button>
+<div class="overlay" id="postOverlay" role="dialog" aria-modal="true" aria-label="Journal entry">
+  <div class="overlay-panel">
+    <div class="overlay-top">
+      <span>Journal entry</span>
+      <button class="overlay-close" id="postClose" aria-label="Close">&times;</button>
     </div>
-    <div class="post-body" id="postBody"></div>
+    <div class="overlay-body" id="postBody"></div>
   </div>
 </div>
 
 <!-- LIGHTBOX -->
-<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="@hellenic_infographics examples">
-  <div class="lightbox-panel">
-    <div class="lightbox-top">
-      <div class="tab"><span class="tab-dot"></span>@HELLENIC_INFOGRAPHICS</div>
-      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+<div class="overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="@hellenic_infographics examples">
+  <div class="overlay-panel">
+    <div class="overlay-top">
+      <span>@hellenic_infographics</span>
+      <button class="overlay-close" id="lightboxClose" aria-label="Close">&times;</button>
     </div>
     <div class="lightbox-imgwrap">
       <img id="lightboxImg" src="" alt="">
@@ -571,6 +367,72 @@
 </div>
 
 <script>
+  /* ---------------------------------------------------------------- */
+  /* Theme toggle                                                      */
+  /* ---------------------------------------------------------------- */
+  (function(){
+    var root = document.documentElement;
+    var toggle = document.querySelector('[data-theme-toggle]');
+    var STORAGE_KEY = 'theme';
+
+    function applyTheme(theme){
+      if(theme === 'dark'){
+        root.classList.add('dark');
+        if(toggle) toggle.setAttribute('aria-label', 'Switch to light theme');
+      } else {
+        root.classList.remove('dark');
+        if(toggle) toggle.setAttribute('aria-label', 'Switch to dark theme');
+      }
+    }
+
+    try {
+      var stored = localStorage.getItem(STORAGE_KEY);
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(stored ? stored : (prefersDark ? 'dark' : 'light'));
+    } catch(e) { /* localStorage unavailable */ }
+
+    if(toggle){
+      toggle.addEventListener('click', function(){
+        var next = root.classList.contains('dark') ? 'light' : 'dark';
+        applyTheme(next);
+        try { localStorage.setItem(STORAGE_KEY, next); } catch(e) { /* ignore */ }
+      });
+    }
+  })();
+
+  /* ---------------------------------------------------------------- */
+  /* Copy email button                                                  */
+  /* ---------------------------------------------------------------- */
+  (function(){
+    var copyButton = document.querySelector('[data-copy-email]');
+    var statusEl = document.querySelector('.copy-status');
+    var emailLink = document.querySelector('.contact-email a');
+
+    if(copyButton && emailLink){
+      copyButton.addEventListener('click', function(){
+        var email = emailLink.textContent.trim();
+
+        function showCopied(){
+          copyButton.setAttribute('data-copied', 'true');
+          if(statusEl) statusEl.textContent = 'Email copied.';
+          window.setTimeout(function(){
+            copyButton.removeAttribute('data-copied');
+            if(statusEl) statusEl.textContent = '';
+          }, 2000);
+        }
+        function showError(){
+          if(statusEl) statusEl.textContent = "Couldn't copy. Select the email address to copy it manually.";
+        }
+
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(email).then(showCopied, showError);
+        } else {
+          showError();
+        }
+      });
+    }
+  })();
+
   // ---------- JOURNAL POSTS ----------
   // To add a new post: copy one object below, change title/date/excerpt/content/slug, add it to the TOP of the array.
   // slug: a short unique id for the post (used to give it its own comment thread) — lowercase, no spaces, e.g. "my-new-post".
@@ -587,7 +449,7 @@
       ]
     },
     {
-      slug: "starting-this-journal",
+      slug: "mobile-app-development",
       title: "Discovering the world of Mobile App Development",
       date: "Sep 2026",
       excerpt: "Why I'm adding a running log of what I'm building and thinking about to this site.",
@@ -609,9 +471,10 @@
     const mount = document.getElementById('giscusMount');
     mount.innerHTML = '';
     if(GISCUS_REPO_ID === "R_kgDOT7vozg"){
-      mount.innerHTML = '<p class="post-date">Comments will appear here once giscus is configured.</p>';
+      mount.innerHTML = '<p class="overlay-date">Comments will appear here once giscus is configured.</p>';
       return;
     }
+    const isDark = document.documentElement.classList.contains('dark');
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
     script.setAttribute('data-repo', GISCUS_REPO);
@@ -624,7 +487,7 @@
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', 'noborder_light');
+    script.setAttribute('data-theme', isDark ? 'noborder_dark' : 'noborder_light');
     script.setAttribute('data-lang', 'en');
     script.setAttribute('crossorigin', 'anonymous');
     script.async = true;
@@ -632,13 +495,13 @@
   }
 
   const journalList = document.getElementById('journalList');
-  const journalTabLabel = document.getElementById('journalTabLabel');
+  const journalTitleLabel = document.getElementById('journalTitleLabel');
   const postOverlay = document.getElementById('postOverlay');
   const postBody = document.getElementById('postBody');
   const postClose = document.getElementById('postClose');
 
   function renderJournal(){
-    journalTabLabel.textContent = 'JOURNAL — ' + journalPosts.length + (journalPosts.length === 1 ? ' ENTRY' : ' ENTRIES');
+    journalTitleLabel.textContent = 'Journal — ' + journalPosts.length + (journalPosts.length === 1 ? ' entry' : ' entries');
     if(journalPosts.length === 0){
       journalList.innerHTML = '<p class="journal-empty">Nothing posted yet.</p>';
       return;
@@ -667,9 +530,9 @@
     const post = journalPosts[i];
     postBody.innerHTML =
       '<h3>' + post.title + '</h3>' +
-      '<span class="post-date">' + post.date + '</span>' +
+      '<span class="overlay-date">' + post.date + '</span>' +
       post.content.map(p => '<p>' + p + '</p>').join('') +
-      '<div class="post-comments"><div class="tab"><span class="tab-dot"></span>COMMENTS</div><div id="giscusMount" class="giscus-mount"></div></div>';
+      '<div class="overlay-comments"><span class="overlay-label">Comments</span><div id="giscusMount" class="giscus-mount"></div></div>';
     postOverlay.classList.add('open');
     loadGiscus(post.slug);
   }
