@@ -463,7 +463,7 @@
 
 <div class="topbar">
   <div class="wrap mono">
-    <a href="#top">DRACHTIDIS // ATHENS // <span id="clock">--:--</span></a>
+    <a href="#top">DRACHTIDIS // ATHENS</a>
     <div class="topbar-right">
       <a href="https://github.com/teo3670" target="_blank" rel="noopener">GH</a>
       <a href="https://linkedin.com/in/theodoros-drachtidis" target="_blank" rel="noopener">LI</a>
@@ -720,7 +720,6 @@
     <div class="wrap">
       <span class="sec-label mono"><span class="n" style="color:#6E8BFF">06</span> / Contact</span>
       <h2 class="heading">Let's talk.</h2>
-      <p>Open to venture conversations, or just talking data and ideas.</p>
       <ul class="contact-links">
         <li><a href="mailto:theodoredraht@gmail.com">Email <span class="label">theodoredraht@gmail.com &gt;</span></a></li>
         <li><a href="https://linkedin.com/in/theodoros-drachtidis" target="_blank" rel="noopener">LinkedIn <span class="label">theodoros-drachtidis &gt;</span></a></li>
@@ -922,14 +921,6 @@
     if(e.key === 'ArrowLeft') stepLightbox(-1);
     if(e.key === 'ArrowRight') stepLightbox(1);
   });
-  // Athens clock in the top bar
-  (function(){
-    const el = document.getElementById('clock');
-    function tick(){
-      try{ el.textContent = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Athens'}); }catch(e){}
-    }
-    tick(); setInterval(tick, 30000);
-  })();
 </script>
 
 </body>
