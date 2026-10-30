@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theodoros Drachtidis</title>
+<meta name="theme-color" content="#0033FF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* Inspired by FOSSCOMM 2026: paper + ink + one electric blue.
+     Want it fully monochrome again? Set --accent to #0A0A0A. */
+  :root{
+    --paper:#FAFAF7;
+    --paper-2:#F1F1EC;
+    --ink:#0A0A0A;
+    --muted:#6B6B66;
+    --line:#DDDDDA;
+    --accent:#0033FF;
+    --on-accent:#FFFFFF;
+    --display:'Space Grotesk', system-ui, sans-serif;
+    --body:'Geist', 'Inter', system-ui, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:15.5px;
+    font-weight:500;
+    line-height:1.62;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent); color:var(--on-accent);}
+  a{color:inherit;}
+  button{font:inherit;}
+
+  .mono, .label{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 32px;}
+  @media (max-width:700px){.wrap{padding:0 16px;}}
+
+  .dots{
+    background-image:radial-gradient(var(--line) 1.4px, transparent 1.4px);
+    background-size:22px 22px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:var(--accent); color:var(--on-accent);
+    border-bottom:1px solid rgba(255,255,255,0.25);
+  }
+  .topbar .wrap{display:flex; justify-content:space-between; align-items:center; height:34px; gap:16px;}
+  .topbar a{text-decoration:none;}
+  .topbar-right{display:flex; gap:16px;}
+  .topbar-right a:hover{text-decoration:underline;}
+  @media (max-width:560px){.topbar-right{display:none;}}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--accent);
+    color:var(--on-accent);
+    padding:72px 0 56px;
+  }
+  .hero h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(3.4rem, 13vw, 9.4rem);
+    line-height:0.86;
+    letter-spacing:-0.05em;
+    text-transform:uppercase;
+  }
+  .hero h1 .outline{
+    color:transparent;
+    -webkit-text-stroke:2px var(--on-accent);
+  }
+  .hero-meta{
+    margin-top:40px;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    border-top:1px solid rgba(255,255,255,0.35);
+  }
+  .hero-meta div{padding:16px 16px 0 0;}
+  .hero-meta .k{opacity:0.7; display:block; margin-bottom:4px;}
+  .hero-meta .v{font-family:var(--display); font-size:1.25rem; font-weight:500; letter-spacing:-0.02em;}
+  @media (max-width:700px){.hero-meta{grid-template-columns:1fr;} .hero-meta div{padding:12px 0 0;}}
+
+  .hero-cta{
+    padding:36px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-cta .wrap{display:flex; justify-content:space-between; gap:32px; flex-wrap:wrap; align-items:flex-end;}
+  .cta-list{list-style:none;}
+  .cta-list a{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:1.55rem;
+    letter-spacing:-0.03em;
+    text-transform:uppercase;
+    text-decoration:none;
+    line-height:1.25;
+  }
+  .cta-list a::after{content:" >"; color:var(--accent);}
+  .cta-list a:hover{color:var(--accent);}
+  .hero-intro{max-width:44ch; color:var(--muted);}
+
+  /* ---------- Finder-style window ---------- */
+  .finder-wrap{padding:8px 0 64px;}
+  .finder{
+    max-width:880px; margin:0 auto;
+    background:#FFFFFF;
+    border:1.5px solid #8E8E89;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 1px 0 rgba(0,0,0,0.04), 0 18px 40px -18px rgba(10,10,10,0.28);
+  }
+  .finder-bar{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    height:48px; padding:0 16px;
+    background:#EDEDEA;
+    border-bottom:1px solid #CFCFCA;
+  }
+  .lights{position:absolute; left:16px; top:50%; transform:translateY(-50%); display:flex; gap:8px;}
+  .lights i{width:13px; height:13px; border-radius:50%; display:block; border:1px solid rgba(0,0,0,0.12);}
+  .lights i:nth-child(1){background:#FF5F57;}
+  .lights i:nth-child(2){background:#FEBC2E;}
+  .lights i:nth-child(3){background:#28C840;}
+  .finder-path{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:13px; color:#3A3A37;}
+  .finder-path svg{width:18px; height:18px;}
+  @media (max-width:560px){.finder-path{font-size:11px; margin-left:64px;}}
+
+  .finder-head, .finder-row{
+    display:grid;
+    grid-template-columns:minmax(0,1.35fr) minmax(0,1.25fr) 150px;
+    gap:16px; align-items:center;
+    padding:0 20px;
+  }
+  .finder-head{
+    height:38px; color:#8A8A85;
+    font-family:var(--body); font-size:13px;
+  }
+  .finder-head span:last-child, .finder-row .date{text-align:right;}
+  .finder-list{list-style:none; padding:0 8px 10px;}
+  .finder-row{
+    min-height:38px; padding:6px 12px; border-radius:7px;
+    text-decoration:none; color:var(--ink);
+  }
+  .finder-list li:nth-child(odd) .finder-row{background:#F6F6F3;}
+  .finder-row .name{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px; min-width:0;}
+  .finder-row .name span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .finder-row .name svg{flex:0 0 18px; width:18px; height:18px;}
+  .finder-row .kind{font-size:13.5px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .finder-row .date{font-family:var(--body); font-size:13.5px; font-weight:600; white-space:nowrap;}
+  a.finder-row:hover, button.finder-row:hover{background:#E4E9FF;}
+  .finder-row.selected, .finder-row.selected:hover{background:var(--accent); color:var(--on-accent);}
+  .finder-row.selected .kind{color:rgba(255,255,255,0.8);}
+  button.finder-row{width:100%; border:none; text-align:left; cursor:pointer; font:inherit;}
+  .finder-foot{
+    border-top:1px solid #E2E2DE; padding:9px 20px;
+    font-family:var(--body); font-size:12.5px; color:#8A8A85; text-align:center;
+  }
+  @media (max-width:640px){
+    .finder-head{grid-template-columns:minmax(0,1fr) auto;}
+    .finder-head span:nth-child(2){display:none;}
+    .finder-row{grid-template-columns:minmax(0,1fr) auto; row-gap:2px;}
+    .finder-row .kind{grid-column:1 / -1; grid-row:2; padding-left:28px; white-space:normal;}
+  }
+
+
+  /* ---------- GitHub terminal window ---------- */
+  .gh-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.45fr); gap:40px; align-items:start;}
+  @media (max-width:860px){.gh-grid{grid-template-columns:1fr;}}
+  .gh-stats{border-top:1px solid var(--ink);}
+  .gh-stat{display:flex; justify-content:space-between; align-items:baseline; padding:14px 0; border-bottom:1px solid var(--line);}
+  .gh-stat .v{font-family:var(--display); font-weight:700; font-size:2rem; letter-spacing:-0.04em;}
+  .gh-stat .v sup{color:var(--accent); font-size:0.6em; margin-left:2px;}
+  .gh-stat .k{color:var(--muted);}
+  .gh-tools{margin-top:22px; display:flex; flex-wrap:wrap; gap:6px;}
+  .gh-tools span{border:1px solid var(--ink); padding:4px 9px;}
+  .gh-cta{display:inline-block; margin-top:22px; color:var(--accent); text-decoration:none;}
+  .gh-cta::after{content:" >";}
+  .gh-cta:hover{text-decoration:underline;}
+
+  .term{background:#121212; color:#E8E8E3; border-radius:12px; overflow:hidden; border:1.5px solid #2A2A2A; box-shadow:0 18px 40px -18px rgba(10,10,10,0.45);}
+  .term .finder-bar{background:#262626; border-bottom:1px solid #333;}
+  .term .finder-path{color:#B8B8B2;}
+  .term-body{padding:18px 20px 22px; font-family:var(--mono); font-size:12.5px; line-height:1.7; overflow-x:auto;}
+  .term-body .pr{color:#7DA2FF;}
+  .term-body .dim{color:#8A8A85;}
+  .repo{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 16px; padding:10px 0; border-bottom:1px dashed #333; text-decoration:none; color:inherit;}
+  .repo:last-of-type{border-bottom:none;}
+  .repo b{font-weight:700; color:#FFFFFF;}
+  .repo:hover b{color:#7DA2FF;}
+  .repo .lang{color:#8A8A85; text-align:right; white-space:nowrap;}
+  .repo .desc{grid-column:1 / -1; color:#B8B8B2;}
+  .repo .badge{color:#121212; background:#7DA2FF; padding:0 6px; margin-left:6px; font-size:10.5px;}
+  .cursor{display:inline-block; width:8px; height:15px; background:#E8E8E3; vertical-align:-3px; animation:blink 1.1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  @media (prefers-reduced-motion: reduce){.cursor{animation:none;}}
+
+
+  /* ---------- BALab ---------- */
+  .lab-grid{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:56px; align-items:start;}
+  @media (max-width:860px){.lab-grid{grid-template-columns:1fr; gap:40px;}}
+  .lab-grid p{color:var(--muted); margin-bottom:16px;}
+  .lab-grid p strong{color:var(--ink); font-weight:600;}
+  .lab-sub{margin:30px 0 12px; color:var(--muted);}
+  .areas{list-style:none; border-top:1px solid var(--ink); counter-reset:a;}
+  .areas li{
+    display:grid; grid-template-columns:40px 1fr; gap:12px;
+    padding:13px 0; border-bottom:1px solid var(--line);
+    font-family:var(--display); font-weight:500; font-size:1.05rem; letter-spacing:-0.015em; line-height:1.3;
+  }
+  .areas li::before{counter-increment:a; content:counter(a, decimal-leading-zero) "."; font-family:var(--mono); font-size:11px; color:var(--muted); padding-top:4px;}
+  .venues{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+  .venues span{border:1px solid var(--ink); padding:4px 9px;}
+  .role{
+    margin-top:34px; border:1px solid var(--ink); background:#FFFFFF;
+  }
+  .role-head{display:flex; justify-content:space-between; gap:12px; background:var(--accent); color:var(--on-accent); padding:9px 14px;}
+  .role-body{padding:20px 20px 22px;}
+  .role-body h3{font-family:var(--display); font-weight:700; font-size:1.45rem; letter-spacing:-0.035em; text-transform:uppercase; line-height:1.05; margin-bottom:10px;}
+  .role-body p{color:var(--muted); margin-bottom:12px;}
+  .role-qs{list-style:none; margin:14px 0 16px; border-top:1px solid var(--line);}
+  .role-qs li{display:grid; grid-template-columns:120px 1fr; gap:12px; padding:9px 0; border-bottom:1px solid var(--line);}
+  .role-qs li span:first-child{color:var(--accent);}
+  @media (max-width:560px){.role-qs li{grid-template-columns:1fr; gap:2px;}}
+  .lab-link{display:inline-block; margin-top:20px; color:var(--accent); text-decoration:none;}
+  .lab-link::after{content:" >";}
+  .lab-link:hover{text-decoration:underline;}
+
+
+  /* ---------- Logos ---------- */
+  .logo-ic{width:18px; height:18px; flex:0 0 18px; object-fit:contain; border-radius:4px; background:#fff;}
+  .finder-row.selected .logo-ic{box-shadow:0 0 0 1px rgba(255,255,255,0.6);}
+  .app-head{display:flex; align-items:center; gap:16px; margin-bottom:10px;}
+  .app-icon{width:76px; height:76px; border-radius:18px; flex:0 0 76px; box-shadow:0 0 0 1px var(--line), 0 6px 16px -8px rgba(0,0,0,0.35);}
+  .app-head h3{margin-bottom:2px;}
+  .app-head .dev{color:var(--muted);}
+  #financesim > .idx, #financesim > .tag{align-self:start; padding-top:24px;}
+  @media (max-width:700px){#financesim > .tag{padding-top:0;}}
+  .shots{display:flex; gap:10px; margin-top:18px; overflow-x:auto; padding-bottom:6px;}
+  .shots img{height:220px; width:auto; border-radius:10px; border:1px solid var(--line); flex:0 0 auto; background:#111;}
+  @media (max-width:700px){.shots img{height:180px;}}
+  .play-btn{
+    display:inline-flex; align-items:center; gap:14px; margin-top:20px;
+    padding:10px 18px 10px 10px;
+    background:#FFFFFF; color:var(--ink); text-decoration:none;
+    border:1px solid var(--ink); border-radius:14px;
+    transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .play-btn:hover{border-color:var(--accent); box-shadow:0 8px 20px -12px rgba(0,51,255,.55); transform:translateY(-1px);}
+  .play-btn img{width:40px; height:40px; border-radius:10px; flex:0 0 40px;}
+  .play-btn .txt{display:flex; flex-direction:column; line-height:1.15;}
+  .play-btn .small{font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);}
+  .play-btn .big{font-family:var(--display); font-weight:700; font-size:1.1rem; letter-spacing:-.02em;}
+  .play-btn .gp{width:20px; height:20px; margin-left:6px; flex:0 0 20px;}
+  .play-btn .arr{font-family:var(--mono); color:var(--accent); margin-left:2px;}
+  .lab-logo{display:block; background:#fff; border:1px solid var(--line); padding:14px 18px; margin-bottom:26px; width:fit-content;}
+  .lab-logo img{display:block; height:58px; width:auto;}
+  .doc-window{margin-top:34px; max-width:none;}
+  .doc-window .finder-path img{width:16px; height:16px; border-radius:3px;}
+  .doc-meta{display:flex; justify-content:space-between; gap:12px; padding:10px 22px; border-bottom:1px solid #E2E2DE; color:#8A8A85; font-size:11px;}
+  .doc-window .role-body{padding:22px 22px 24px;}
+
+  /* ---------- Section nav ---------- */
+  .secnav{
+    border-bottom:1px solid var(--line);
+    background:var(--paper);
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+  .secnav .wrap{display:flex; gap:22px; height:44px; align-items:center;}
+  .secnav a{text-decoration:none; color:var(--muted);}
+  .secnav a .n{color:var(--accent);}
+  .secnav a:hover{color:var(--ink);}
+
+  /* ---------- Sections ---------- */
+  section.block{padding:84px 0; border-bottom:1px solid var(--line); scroll-margin-top:34px;}
+  .row{scroll-margin-top:60px;}
+  .sec-label{color:var(--muted); margin-bottom:14px; display:block;}
+  .sec-label .n{color:var(--accent);}
+  h2.heading{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(1.9rem, 4.2vw, 2.6rem);
+    line-height:1.02;
+    letter-spacing:-0.045em;
+    text-transform:uppercase;
+    margin-bottom:34px;
+  }
+  h2.heading .hl{color:var(--accent);}
+  p{max-width:62ch;}
+  .muted{color:var(--muted);}
+
+  /* About */
+  .about-grid{display:grid; grid-template-columns:1.25fr 1fr; gap:56px; align-items:start;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr; gap:36px;}}
+  .about-grid p{color:var(--muted); margin-bottom:16px;}
+  .about-grid p strong{color:var(--ink); font-weight:600;}
+  .facts{border-top:1px solid var(--ink);}
+  .fact{
+    display:flex; justify-content:space-between; gap:16px;
+    padding:12px 0; border-bottom:1px solid var(--line);
+  }
+  .fact .k{color:var(--muted);}
+  .fact .v{font-weight:600; text-align:right;}
+
+  /* Work: numbered list rows */
+  .rows{list-style:none; border-top:1px solid var(--ink);}
+  .row{
+    display:grid;
+    grid-template-columns:56px 1fr 180px;
+    gap:20px;
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .row .idx{color:var(--muted);}
+  .row h3{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:1.6rem;
+    letter-spacing:-0.035em;
+    text-transform:uppercase;
+    line-height:1.05;
+    margin-bottom:8px;
+  }
+  .row p{color:var(--muted);}
+  .row .tag{text-align:right; color:var(--muted);}
+  .row-click{cursor:pointer;}
+  .row-click:hover h3{color:var(--accent);}
+  .row .more{display:inline-block; margin-top:12px; color:var(--accent); text-decoration:none;}
+  .row .more::after{content:" >";}
+  .row a.more:hover{text-decoration:underline;}
+  .row > div{min-width:0;}
+  .row h3{overflow-wrap:anywhere;}
+  @media (max-width:700px){
+    .row h3{font-size:1.3rem;}
+    .contact-links a .label{display:none;}
+    .row{grid-template-columns:36px 1fr;}
+    .row .tag{grid-column:2; text-align:left;}
+  }
+
+  /* Journal */
+  .journal-list{border-top:1px solid var(--ink);}
+  .journal-item{
+    display:grid; grid-template-columns:1fr auto; gap:20px;
+    padding:22px 0; border-bottom:1px solid var(--line);
+    cursor:pointer; align-items:baseline;
+  }
+  .journal-title{
+    font-family:var(--display); font-weight:700; font-size:1.35rem;
+    letter-spacing:-0.03em; text-transform:uppercase;
+  }
+  .journal-item:hover .journal-title{color:var(--accent);}
+  .journal-title::after{content:" >"; color:var(--accent);}
+  .journal-excerpt{color:var(--muted); margin-top:6px;}
+  .journal-date{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--muted); white-space:nowrap;
+  }
+  .journal-empty{color:var(--muted); padding:20px 0;}
+
+  /* Toolkit */
+  .tool-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border-top:1px solid var(--ink);}
+  @media (max-width:760px){.tool-grid{grid-template-columns:1fr;}}
+  .tool-col{padding:22px 22px 22px 0;}
+  .tool-col + .tool-col{border-left:1px solid var(--line); padding-left:22px;}
+  @media (max-width:760px){.tool-col + .tool-col{border-left:none; border-top:1px solid var(--line); padding-left:0;}}
+  .tool-col h4{margin-bottom:14px; color:var(--muted);}
+  .tool-col ul{list-style:none;}
+  .tool-col li{
+    font-family:var(--display); font-weight:500; font-size:1.1rem;
+    letter-spacing:-0.02em; padding:4px 0;
+  }
+
+  /* Contact */
+  .contact{background:var(--ink); color:var(--paper); border-bottom:none;}
+  .contact .sec-label{color:#9A9A94;}
+  .contact h2.heading{font-size:clamp(2.6rem, 8vw, 5.4rem); margin-bottom:22px;}
+  .contact p{color:#B5B5AF; margin-bottom:30px;}
+  .contact-links{list-style:none; border-top:1px solid #333;}
+  .contact-links a{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; border-bottom:1px solid #333;
+    text-decoration:none;
+    font-family:var(--display); font-weight:700; font-size:1.3rem;
+    letter-spacing:-0.03em; text-transform:uppercase;
+  }
+  .contact-links a .label{color:#9A9A94;}
+  .contact-links a:hover{color:#6E8BFF;}
+  .contact-links a:hover .label{color:#6E8BFF;}
+
+  footer{padding:22px 0; border-top:1px solid var(--line);}
+  footer .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; color:var(--muted);}
+
+  /* ---------- Overlays (post + lightbox) ---------- */
+  .post-overlay, .lightbox-overlay{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(10,10,10,0.82);
+    display:none; align-items:flex-start; justify-content:center;
+    padding:56px 16px; overflow-y:auto;
+  }
+  .post-overlay.open, .lightbox-overlay.open{display:flex;}
+  .post-panel, .lightbox-panel{
+    background:var(--paper); width:100%; max-width:720px;
+    border:1px solid var(--ink);
+  }
+  .lightbox-panel{max-width:680px;}
+  .post-top, .lightbox-top{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 0 0 16px; height:38px;
+    background:var(--accent); color:var(--on-accent);
+  }
+  .tab{font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase;}
+  .tab-dot{display:none;}
+  .post-close, .lightbox-close{
+    width:38px; height:38px; border:none; background:transparent;
+    color:var(--on-accent); cursor:pointer; font-size:18px;
+    border-left:1px solid rgba(255,255,255,0.3);
+  }
+  .post-close:hover, .lightbox-close:hover{background:var(--ink);}
+  .post-body{padding:36px 36px 40px;}
+  @media (max-width:700px){.post-body{padding:24px 18px;}}
+  .post-body h3{
+    font-family:var(--display); font-weight:700; font-size:2.2rem;
+    letter-spacing:-0.045em; text-transform:uppercase; line-height:1;
+    margin-bottom:12px;
+  }
+  .post-date{display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:26px;}
+  .post-body p{margin-bottom:16px;}
+  .post-comments{margin-top:30px; padding-top:22px; border-top:1px solid var(--ink);}
+  .post-comments .tab{display:block; color:var(--muted); margin-bottom:16px;}
+  .giscus-mount{min-height:60px;}
+
+  .lightbox-imgwrap{padding:16px; background:var(--paper-2); display:flex; justify-content:center;}
+  .lightbox-imgwrap img{max-width:100%; max-height:62vh; object-fit:contain; display:block;}
+  .lightbox-caption{padding:14px 16px 0; color:var(--muted); max-width:none;}
+  .lightbox-nav{display:flex; justify-content:space-between; align-items:center; padding:14px 16px 16px;}
+  .lightbox-arrow{
+    background:none; border:1px solid var(--ink); padding:7px 12px; cursor:pointer;
+    font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink);
+  }
+  .lightbox-arrow:hover{background:var(--accent); border-color:var(--accent); color:var(--on-accent);}
+  .lightbox-count{font-family:var(--mono); font-size:11px; color:var(--muted);}
+
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap mono">
+    <a href="#top">DRACHTIDIS // ATHENS // <span id="clock">--:--</span></a>
+    <div class="topbar-right">
+      <a href="https://github.com/teo3670" target="_blank" rel="noopener">GH</a>
+      <a href="https://linkedin.com/in/theodoros-drachtidis" target="_blank" rel="noopener">LI</a>
+      <a href="https://instagram.com/drachtidis_" target="_blank" rel="noopener">IG</a>
+    </div>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <h1>Theodoros<br>Drachtidis<br><span class="outline">/MST</span></h1>
+    <div class="hero-meta mono">
+      <div><span class="k">Studying</span><span class="v">Management Science &amp; Technology</span></div>
+      <div><span class="k">Where</span><span class="v">AUEB, Athens</span></div>
+      <div><span class="k">Currently</span><span class="v">2nd year · BALab researcher</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="hero-cta dots">
+  <div class="wrap">
+    <ul class="cta-list">
+      <li><a href="#balab">Research</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#github">GitHub</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <p class="hero-intro">Maker of FinanceSim, now live on Google Play. Creator of @hellenic_infographics and undergraduate researcher at AUEB's Business Analytics Lab.</p>
+  </div>
+</div>
+
+<div class="finder-wrap dots">
+  <div class="wrap">
+    <div class="finder" role="region" aria-label="About Theodoros, as a folder">
+      <div class="finder-bar">
+        <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="finder-path">
+          <svg viewBox="0 0 24 24" fill="#3A3A37" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.6l2 2.2h8.4A1.5 1.5 0 0 1 21 8.7v9.8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg>
+          ~/Desktop/theodoros
+        </div>
+      </div>
+      <div class="finder-head"><span>Name</span><span>What it is</span><span>Date</span></div>
+      <ul class="finder-list">
+        <li><a class="finder-row" href="#about"><span class="name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="m10 12-2 2 2 2M14 12l2 2-2 2"/></svg><span>readme.txt</span></span><span class="kind">Theodoros Drachtidis · Athens, Greece</span><span class="date">—</span></a></li>
+        <li><a class="finder-row" href="#about"><span class="name"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.6l2 2.2h8.4A1.5 1.5 0 0 1 21 8.7v9.8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg><span>bsc_mst_aueb/</span></span><span class="kind">Management Science &amp; Technology, AUEB</span><span class="date">Sep 2025 → now</span></a></li>
+        <li><a class="finder-row" href="#balab"><span class="name"><img class="logo-ic" referrerpolicy="no-referrer" src="https://www.balab.aueb.gr/theme/images/BA_Logo.png" alt="" onerror="this.style.visibility='hidden'"><span>balab_researcher.md</span></span><span class="kind">Undergraduate Researcher, Business Analytics Lab</span><span class="date">Aug 2026 → now</span></a></li>
+        <li><button class="finder-row" type="button" data-open-gallery><span class="name"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.6l2 2.2h8.4A1.5 1.5 0 0 1 21 8.7v9.8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg><span>hellenic_infographics/</span></span><span class="kind">Creator · data maps &amp; comparisons</span><span class="date">Nov 2022 → now</span></button></li>
+        <li><a class="finder-row" href="#acein"><span class="name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="m10 12-2 2 2 2M14 12l2 2-2 2"/></svg><span>acein_summer_school.pdf</span></span><span class="kind">AUEB × NYU Tandon × Onassis ONX</span><span class="date">Jul 2026</span></a></li>
+        <li><a class="finder-row" href="#about"><span class="name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="m10 12-2 2 2 2M14 12l2 2-2 2"/></svg><span>ermis_top_contestant.pdf</span></span><span class="kind">6th ERMIS competition, AUEB</span><span class="date">Mar 2025</span></a></li>
+        <li><a class="finder-row" href="#about"><span class="name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="m10 12-2 2 2 2M14 12l2 2-2 2"/></svg><span>red_cross_essay_award.pdf</span></span><span class="kind">Hellenic Red Cross, national essay award</span><span class="date">Jun 2022</span></a></li>
+        <li><a class="finder-row" href="#about"><span class="name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="m10 12-2 2 2 2M14 12l2 2-2 2"/></svg><span>english_c2.cert</span></span><span class="kind">Michigan State University</span><span class="date">Dec 2023</span></a></li>
+        <li><a class="finder-row" href="#github"><span class="name"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.6l2 2.2h8.4A1.5 1.5 0 0 1 21 8.7v9.8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg><span>github/teo3670/</span></span><span class="kind">6 public repos · 420 contributions this year</span><span class="date">since 2021</span></a></li>
+        <li><a class="finder-row selected" href="https://play.google.com/store/apps/details?id=com.financesim.game" target="_blank" rel="noopener"><span class="name"><img class="logo-ic" referrerpolicy="no-referrer" src="assets/financesim-icon.png" data-remote="https://play-lh.googleusercontent.com/PbU8nsqa0PJkFjNZOG2FFl3kstAtGxrEX6nPw7xK8BvsMipwwMz-JPY5_5h_zAKk0oCd0Fv6OpHxM7fZ0-dq=w64" alt="" onerror="if(this.dataset.remote){this.src=this.dataset.remote;this.dataset.remote='';}else{this.style.visibility='hidden';}"><span>financesim.apk</span></span><span class="kind">Live on Google Play · economy simulator</span><span class="date">Oct 2026</span></a></li>
+      </ul>
+      <div class="finder-foot">10 items · last modified today</div>
+    </div>
+  </div>
+</div>
+
+<nav class="secnav mono" aria-label="Sections">
+  <div class="wrap">
+    <a href="#about"><span class="n">01</span> / About</a>
+    <a href="#balab"><span class="n">02</span> / BALab</a>
+    <a href="#work"><span class="n">03</span> / Work</a>
+    <a href="#github"><span class="n">04</span> / GitHub</a>
+    <a href="#toolkit"><span class="n">05</span> / Toolkit</a>
+    <a href="#contact"><span class="n">06</span> / Contact</a>
+  </div>
+</nav>
+
+<main>
+  <section class="block" id="about">
+    <div class="wrap">
+      <span class="sec-label mono"><span class="n">01</span> / About</span>
+      <h2 class="heading">Building things <span class="hl">outside the syllabus</span></h2>
+      <div class="about-grid">
+        <div>
+          <p>I study <strong>Management Science &amp; Technology</strong> at the Athens University of Economics and Business, with coursework in programming, data analysis and business information systems — right now mostly Java and data-science fundamentals.</p>
+          <p>Since August 2026 I'm an <strong>undergraduate researcher at the Business Analytics Lab (BALab)</strong>, working on an empirical software-engineering study (more below). Outside class I run <strong>@hellenic_infographics</strong> and build apps on the side. The first one to ship is <strong>FinanceSim</strong>, a national-economy simulator on Google Play.</p>
+        </div>
+        <div>
+          <p><strong>Recognition.</strong> Top contestant in AUEB's 6th ERMIS competition (2025), and a national award-winning essay on historical socio-economics for the Hellenic Red Cross, selected for the Asia Minor centennial (2022).</p>
+          <p><strong>Certifications.</strong> English C2 (Michigan State University), Learning Java 11 (LinkedIn), and Anthropic's AI Fluency and Claude 101 courses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block dots" id="balab">
+    <div class="wrap">
+      <span class="sec-label mono"><span class="n">02</span> / Research</span>
+      <h2 class="heading">Business Analytics <span class="hl">Lab</span></h2>
+      <div class="lab-grid">
+        <div>
+          <a class="lab-logo" href="https://www.balab.aueb.gr" target="_blank" rel="noopener" aria-label="Business Analytics Lab website"><img src="https://www.balab.aueb.gr/theme/images/ba-logo2.png" alt="Business Analytics Lab logo" onerror="this.parentNode.style.display='none'"></a>
+          <p>The <strong>Business Analytics Lab (BALab)</strong> is the research lab of AUEB's Department of Management Science &amp; Technology, headed by <strong>Prof. Diomidis Spinellis</strong>. Its aim is to research, develop and disseminate software, systems, methods and practices built on data analytics.</p>
+          <p>What makes it matter is where the work ends up. Recent BALab papers have appeared in <strong>ACM Transactions on Software Engineering and Methodology</strong>, <strong>OSDI</strong>, <strong>MSR</strong>, <strong>Empirical Software Engineering</strong> and <strong>IEEE Software</strong>, and one received a Distinguished Paper Award. For an undergraduate, that means learning research by doing it, next to people who publish at that level.</p>
+
+          <div class="lab-sub mono">Where BALab publishes</div>
+          <div class="venues mono"><span>ACM TOSEM</span><span>OSDI</span><span>MSR</span><span>Empirical SE</span><span>IEEE Software</span><span>IEEE Computer</span></div>
+
+          <div class="finder doc-window" role="region" aria-label="My role at BALab">
+            <div class="finder-bar">
+              <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="finder-path"><img src="https://www.balab.aueb.gr/theme/images/BA_Logo.png" alt="" onerror="this.remove()">balab_researcher.md</div>
+            </div>
+            <div class="doc-meta mono"><span>My role</span><span>Aug 2026 → now</span></div>
+            <div class="role-body">
+              <h3>Undergraduate researcher</h3>
+              <p>I'm part of a team working on an empirical software-engineering study that mines large open-source datasets at scale with AWS Athena. I lead one of the study's analysis axes.</p>
+              <p>More details once the paper is out.</p>
+              <div class="venues mono"><span>Empirical software engineering</span><span>Mining software repositories</span><span>AWS Athena · SQL</span></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="lab-sub mono" style="margin-top:0;">Research areas</div>
+          <ol class="areas">
+            <li>Software engineering and management-science applications of data analytics</li>
+            <li>AI applications of big data</li>
+            <li>Data analytics for IT security</li>
+            <li>Software and systems for big data</li>
+            <li>Industrial adoption of business analytics</li>
+            <li>Energy use and runtime performance in the era of AI and big data</li>
+          </ol>
+          <a class="lab-link mono" href="https://www.balab.aueb.gr" target="_blank" rel="noopener">balab.aueb.gr</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="work">
+    <div class="wrap">
+      <span class="sec-label mono"><span class="n">03</span> / Work</span>
+      <h2 class="heading">Selected <span class="hl">work</span></h2>
+      <ol class="rows">
+        <li class="row" id="financesim">
+          <span class="idx mono">01.</span>
+          <div>
+            <div class="app-head">
+              <img class="app-icon" referrerpolicy="no-referrer" src="assets/financesim-icon.png" data-remote="https://play-lh.googleusercontent.com/PbU8nsqa0PJkFjNZOG2FFl3kstAtGxrEX6nPw7xK8BvsMipwwMz-JPY5_5h_zAKk0oCd0Fv6OpHxM7fZ0-dq=w192" alt="FinanceSim app icon" onerror="if(this.dataset.remote){this.src=this.dataset.remote;this.dataset.remote='';}else{this.style.visibility='hidden';}">
+              <div>
+                <h3>FinanceSim</h3>
+                <span class="dev mono">TD Codes · Google Play</span>
+              </div>
+            </div>
+            <p>A mobile game where you run a national economy in real time: set taxes and interest rates, fund the budget, manage a sovereign wealth fund, and survive elections, parliament, recessions, trade wars and IMF bailouts. Pick a scenario, from stable superpower to nation in crisis, design your flag, and take office.</p>
+            <div class="shots"><img src="https://play-lh.googleusercontent.com/IeVLGC-9UNIPID1GtPkv7XFt8vosq-vvTAFpfqB70YntTlpZXZzBY8WlPyWxSd7OkSN-v71LNf9JyivToCPh=w440" alt="FinanceSim: run a country's economy" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><img src="https://play-lh.googleusercontent.com/TiHJz3gxlz45RJEtvsRzHaKyUwioZ8r8sexoykf0U_N0x64qh35K6JLWlwQmjRbW_nWCKDQjpmLys6M5-RkXGg=w440" alt="FinanceSim: relive real economic crises" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><img src="https://play-lh.googleusercontent.com/ZMhbsj78eTl9hhPx2ev-4Hoi7VUZ3VUhjHwY8TiSPAAFuAYEZWP0LHu5ntrYbtxLgKBqMrnQrCxQX0trvcVNhw=w440" alt="FinanceSim: steer through recessions" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><img src="https://play-lh.googleusercontent.com/kEpRzh679FD9MprQCC6XaW1SQm7H9IIu8uwMgCMZgzyqNN8bgHGJiajJHKfZaHFwCVf_z3odWzkr0AJxNYOm9ss=w440" alt="FinanceSim: make the hard calls" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></div>
+            <a class="play-btn" href="https://play.google.com/store/apps/details?id=com.financesim.game" target="_blank" rel="noopener" aria-label="Get FinanceSim on Google Play">
+              <img src="assets/financesim-icon.png" data-remote="https://play-lh.googleusercontent.com/PbU8nsqa0PJkFjNZOG2FFl3kstAtGxrEX6nPw7xK8BvsMipwwMz-JPY5_5h_zAKk0oCd0Fv6OpHxM7fZ0-dq=w128" alt="" referrerpolicy="no-referrer" onerror="if(this.dataset.remote){this.src=this.dataset.remote;this.dataset.remote='';}else{this.style.visibility='hidden';}">
+              <span class="txt"><span class="small">Get it on</span><span class="big">Google Play</span></span>
+              <svg class="gp" viewBox="0 0 24 24" aria-hidden="true"><path fill="#00D7FE" d="M3.6 2.3 13.4 12 3.6 21.7c-.3-.2-.5-.6-.5-1.1V3.4c0-.5.2-.9.5-1.1z"/><path fill="#FFCE00" d="m16.8 15.4-3.4-3.4 3.4-3.4 3.9 2.2c1.1.6 1.1 1.7 0 2.4z"/><path fill="#FF3A44" d="M16.8 15.4 13.4 12l-9.8 9.7c.4.3 1 .3 1.6 0z"/><path fill="#00F076" d="M16.8 8.6 5.2 2c-.6-.3-1.2-.3-1.6 0l9.8 9.7z"/></svg>
+              <span class="arr">&gt;</span>
+            </a>
+          </div>
+          <span class="tag mono">Launched · Oct 2026</span>
+        </li>
+        <li class="row row-click" id="hellenicCard" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open examples from @hellenic_infographics">
+          <span class="idx mono">02.</span>
+          <div>
+            <h3>@hellenic_infographics</h3>
+            <p>Since November 2022, a page that turns data from Wikipedia and other public sources into maps and comparison graphics about Greece and beyond.</p>
+            <span class="more mono">View 4 examples</span>
+          </div>
+          <span class="tag mono">Data viz · mapping</span>
+        </li>
+        <li class="row" id="acein">
+          <span class="idx mono">03.</span>
+          <div>
+            <h3>The Digital Sanctuary</h3>
+            <p>Built with team Starling at the ACEin Summer School (AUEB, NYU Tandon, Onassis ONX). Two pitches, feedback from NYU and AUEB faculty, and a working app prototype in under two weeks.</p>
+          </div>
+          <span class="tag mono">Summer school · Jul 2026</span>
+        </li>
+        <li class="row">
+          <span class="idx mono">04.</span>
+          <div>
+            <h3>Discord bots &amp; side builds</h3>
+            <p>Founder of the IcariaCord and HellenicTM Discord communities, with custom aoi.js bots for moderation and engagement (2020–2022). Ongoing coding projects live on GitHub.</p>
+          </div>
+          <span class="tag mono">Code &amp; community</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="github">
+    <div class="wrap">
+      <span class="sec-label mono"><span class="n">04</span> / GitHub</span>
+      <h2 class="heading">Code, <span class="hl">in public</span></h2>
+      <div class="gh-grid">
+        <div>
+          <p class="muted">Most of what I build starts on GitHub: university team projects, side apps, Discord bots from my early days, and contributions to the BALab website as part of the lab.</p>
+          <div class="gh-stats mono" style="margin-top:22px;">
+            <div class="gh-stat"><span class="k">Contributions, last 12 months</span><span class="v">420<sup>+</sup></span></div>
+            <div class="gh-stat"><span class="k">Public repositories</span><span class="v">6</span></div>
+            <div class="gh-stat"><span class="k">Coding since</span><span class="v">2020</span></div>
+          </div>
+          <div class="gh-tools mono">
+            <span>Java</span><span>TypeScript</span><span>React Native</span><span>JavaScript</span><span>HTML5</span><span>MATLAB</span><span>AWS</span><span>Git</span>
+          </div>
+          <a class="gh-cta mono" href="https://github.com/teo3670" target="_blank" rel="noopener">github.com/teo3670</a>
+        </div>
+        <div class="term" role="region" aria-label="Selected GitHub repositories">
+          <div class="finder-bar">
+            <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="finder-path">teo3670 — zsh</div>
+          </div>
+          <div class="term-body">
+            <div><span class="pr">teo3670 ~ %</span> gh repo list --public</div>
+          <a class="repo" href="https://github.com/AUEB-BALab/web" target="_blank" rel="noopener"><span><b>AUEB-BALab/web</b><span class="badge">pinned</span></span><span class="lang">TeX</span><span class="desc">The Business Analytics Lab website. Contributor as a lab member.</span></a>
+          <a class="repo" href="https://github.com/teo3670/teo3670.github.io" target="_blank" rel="noopener"><span><b>teo3670.github.io</b></span><span class="lang">HTML</span><span class="desc">This site: portfolio, journal with GitHub-backed comments, infographics gallery.</span></a>
+          <a class="repo" href="https://github.com/teo3670/squirtle" target="_blank" rel="noopener"><span><b>squirtle</b></span><span class="lang">JavaScript</span><span class="desc">Multipurpose Discord bot built with aoi.js v5: moderation and engagement.</span></a>
+          <a class="repo" href="https://github.com/teo3670/todo_App" target="_blank" rel="noopener"><span><b>todo_App</b></span><span class="lang">—</span><span class="desc">A to-do list app.</span></a>
+          <a class="repo" href="https://github.com/teo3670/Imperium-Romanum" target="_blank" rel="noopener"><span><b>Imperium-Romanum</b></span><span class="lang">JavaScript</span><span class="desc">An early JavaScript project from 2022.</span></a>
+            <div><span class="pr">teo3670 ~ %</span> <span class="cursor" aria-hidden="true"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journal hidden for now: delete the word "hidden" below to bring it back (and re-add the nav links) -->
+  <section class="block" id="journal" hidden>
+    <div class="wrap">
+      <span class="sec-label mono"><span class="n">04</span> / <span id="journalTabLabel">Journal</span></span>
+      <h2 class="heading">Notes &amp; <span class="hl">updates</span></h2>
+      <div class="journal-list" id="journalList"></div>
+    </div>
+  </section>
+
+  <section class="block dots" id="toolkit">
+    <div class="wrap">
+      <span class="sec-label mono"><span class="n">05</span> / Toolkit</span>
+      <h2 class="heading">What I <span class="hl">work with</span></h2>
+      <div class="tool-grid">
+        <div class="tool-col">
+          <h4 class="mono">Code</h4>
+          <ul><li>Java</li><li>React Native · TypeScript</li><li>HTML5 · JavaScript</li><li>MATLAB</li><li>Git</li></ul>
+        </div>
+        <div class="tool-col">
+          <h4 class="mono">Data</h4>
+          <ul><li>Data visualization</li><li>Data mapping</li><li>AWS · Amazon Athena</li></ul>
+        </div>
+        <div class="tool-col">
+          <h4 class="mono">Business</h4>
+          <ul><li>Startups</li><li>Business development</li><li>Pitching</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contact">
+    <div class="wrap">
+      <span class="sec-label mono"><span class="n" style="color:#6E8BFF">06</span> / Contact</span>
+      <h2 class="heading">Let's talk.</h2>
+      <p>Open to venture conversations, or just talking data and ideas.</p>
+      <ul class="contact-links">
+        <li><a href="mailto:theodoredraht@gmail.com">Email <span class="label">theodoredraht@gmail.com &gt;</span></a></li>
+        <li><a href="https://linkedin.com/in/theodoros-drachtidis" target="_blank" rel="noopener">LinkedIn <span class="label">theodoros-drachtidis &gt;</span></a></li>
+        <li><a href="https://github.com/teo3670" target="_blank" rel="noopener">GitHub <span class="label">teo3670 &gt;</span></a></li>
+        <li><a href="https://instagram.com/drachtidis_" target="_blank" rel="noopener">Instagram <span class="label">@drachtidis_ &gt;</span></a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap mono">
+    <span>Theodoros Drachtidis</span>
+    <span>Built &amp; maintained as an ongoing project</span>
+  </div>
+</footer>
+
+<!-- POST READER -->
+<div class="post-overlay" id="postOverlay" role="dialog" aria-modal="true" aria-label="Journal entry">
+  <div class="post-panel">
+    <div class="post-top">
+      <div class="tab"><span class="tab-dot"></span>JOURNAL ENTRY</div>
+      <button class="post-close" id="postClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="post-body" id="postBody"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="@hellenic_infographics examples">
+  <div class="lightbox-panel">
+    <div class="lightbox-top">
+      <div class="tab"><span class="tab-dot"></span>@HELLENIC_INFOGRAPHICS</div>
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="lightbox-imgwrap">
+      <img id="lightboxImg" src="" alt="">
+    </div>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+    <div class="lightbox-nav">
+      <button class="lightbox-arrow" id="lightboxPrev">&larr; Prev</button>
+      <span class="lightbox-count" id="lightboxCount"></span>
+      <button class="lightbox-arrow" id="lightboxNext">Next &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- JOURNAL POSTS ----------
+  // To add a new post: copy one object below, change title/date/excerpt/content/slug, add it to the TOP of the array.
+  // slug: a short unique id for the post (used to give it its own comment thread) — lowercase, no spaces, e.g. "my-new-post".
+  // date: any short label you like, e.g. "Sep 2026". content: one string per paragraph.
+  const journalPosts = [
+    {
+      slug: "starting-this-journal",
+      title: "Starting this journal",
+      date: "Sep 2026",
+      excerpt: "Why I'm adding a running log of what I'm building and thinking about to this site.",
+      content: [
+        "I've had this site as a static portfolio for a while, but most of the interesting stuff — the half-finished ideas, the things I'm learning, the small wins — never made it anywhere public.",
+        "This is where that goes from now on. Short, infrequent, not polished."
+      ]
+    }
+  ];
+
+  // ---------- GISCUS COMMENTS ----------
+  // Fill these in from giscus.app after enabling GitHub Discussions on your repo.
+  const GISCUS_REPO = "teo3670/teo3670.github.io";
+  const GISCUS_REPO_ID = "YOUR_REPO_ID_HERE";
+  const GISCUS_CATEGORY = "Announcements";
+  const GISCUS_CATEGORY_ID = "YOUR_CATEGORY_ID_HERE";
+
+  function loadGiscus(slug){
+    const mount = document.getElementById('giscusMount');
+    mount.innerHTML = '';
+    if(GISCUS_REPO_ID === "YOUR_REPO_ID_HERE"){
+      mount.innerHTML = '<p class="post-date">Comments will appear here once giscus is configured.</p>';
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', GISCUS_REPO);
+    script.setAttribute('data-repo-id', GISCUS_REPO_ID);
+    script.setAttribute('data-category', GISCUS_CATEGORY);
+    script.setAttribute('data-category-id', GISCUS_CATEGORY_ID);
+    script.setAttribute('data-mapping', 'specific');
+    script.setAttribute('data-term', slug);
+    script.setAttribute('data-strict', '1');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'noborder_light');
+    script.setAttribute('data-lang', 'en');
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+    mount.appendChild(script);
+  }
+
+  const journalList = document.getElementById('journalList');
+  const journalTabLabel = document.getElementById('journalTabLabel');
+  const postOverlay = document.getElementById('postOverlay');
+  const postBody = document.getElementById('postBody');
+  const postClose = document.getElementById('postClose');
+
+  function renderJournal(){
+    journalTabLabel.textContent = 'Journal — ' + journalPosts.length + (journalPosts.length === 1 ? ' entry' : ' entries');
+    if(journalPosts.length === 0){
+      journalList.innerHTML = '<p class="journal-empty">Nothing posted yet.</p>';
+      return;
+    }
+    journalList.innerHTML = '';
+    journalPosts.forEach((post, i) => {
+      const item = document.createElement('div');
+      item.className = 'journal-item';
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.innerHTML =
+        '<div class="journal-main">' +
+          '<div class="journal-title">' + post.title + '</div>' +
+          '<div class="journal-excerpt">' + post.excerpt + '</div>' +
+        '</div>' +
+        '<div class="journal-date">' + post.date + '</div>';
+      item.addEventListener('click', () => openPost(i));
+      item.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openPost(i); }
+      });
+      journalList.appendChild(item);
+    });
+  }
+
+  function openPost(i){
+    const post = journalPosts[i];
+    postBody.innerHTML =
+      '<h3>' + post.title + '</h3>' +
+      '<span class="post-date">' + post.date + '</span>' +
+      post.content.map(p => '<p>' + p + '</p>').join('') +
+      '<div class="post-comments"><div class="tab"><span class="tab-dot"></span>COMMENTS</div><div id="giscusMount" class="giscus-mount"></div></div>';
+    postOverlay.classList.add('open');
+    loadGiscus(post.slug);
+  }
+  function closePost(){
+    postOverlay.classList.remove('open');
+  }
+  postClose.addEventListener('click', closePost);
+  postOverlay.addEventListener('click', (e) => { if(e.target === postOverlay) closePost(); });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && postOverlay.classList.contains('open')) closePost();
+  });
+
+  renderJournal();
+
+  // ---------- HELLENIC INFOGRAPHICS GALLERY ----------
+  const hellenicImages = [
+    { src: 'assets/hellenic-startup-index-map.jpg', caption: 'Euro-Cities Startup Index 2026 — a ranked map of European startup ecosystems.' },
+    { src: 'assets/hellenic-startup-index-map-alt.jpg', caption: 'Euro-Cities Startup Index 2026 — same dataset, scaled by rank.' },
+    { src: 'assets/hellenic-startup-index-ranking.jpg', caption: 'Euro-Cities Startup Index 2026 — the full city-by-city ranking.' },
+    { src: 'assets/hellenic-greece-shrinking.jpg', caption: '"Greece is shrinking" — a decade of population change across Greek regions.' }
+  ];
+  let lbIndex = 0;
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxCount = document.getElementById('lightboxCount');
+  const hellenicCard = document.getElementById('hellenicCard');
+
+  function renderLightbox(){
+    const item = hellenicImages[lbIndex];
+    lightboxImg.src = item.src;
+    lightboxImg.alt = item.caption;
+    lightboxCaption.textContent = item.caption;
+    lightboxCount.textContent = (lbIndex + 1) + ' / ' + hellenicImages.length;
+  }
+  function openLightbox(i){
+    lbIndex = i;
+    renderLightbox();
+    lightbox.classList.add('open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+  }
+  function stepLightbox(delta){
+    lbIndex = (lbIndex + delta + hellenicImages.length) % hellenicImages.length;
+    renderLightbox();
+  }
+
+  hellenicCard.addEventListener('click', () => openLightbox(0));
+  document.querySelectorAll('[data-open-gallery]').forEach(b => b.addEventListener('click', () => openLightbox(0)));
+  hellenicCard.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLightbox(0); }
+  });
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', () => stepLightbox(-1));
+  document.getElementById('lightboxNext').addEventListener('click', () => stepLightbox(1));
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if(!lightbox.classList.contains('open')) return;
+    if(e.key === 'Escape') closeLightbox();
+    if(e.key === 'ArrowLeft') stepLightbox(-1);
+    if(e.key === 'ArrowRight') stepLightbox(1);
+  });
+  // Athens clock in the top bar
+  (function(){
+    const el = document.getElementById('clock');
+    function tick(){
+      try{ el.textContent = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Athens'}); }catch(e){}
+    }
+    tick(); setInterval(tick, 30000);
+  })();
+</script>
+
+</body>
+</html>
