@@ -1,0 +1,38 @@
+/* Shared Gmail-style sidebar menu. Built by assets/sidebar.js. Needs the site colour/font tokens. */
+.menu-btn{
+  position:absolute; left:10px; top:3px; width:28px; height:28px; display:grid; place-items:center;
+  background:none; border:0; border-radius:50%; color:var(--on-accent); cursor:pointer;
+}
+.menu-btn:hover{background:rgba(255,255,255,0.18);}
+.menu-btn svg{width:20px; height:20px;}
+@media (max-width:1230px){.topbar .wrap{padding-left:52px;}}
+
+.sidebar{
+  position:fixed; top:34px; left:0; bottom:0; width:260px; z-index:60;
+  background:var(--paper-2); border-right:1px solid var(--line);
+  overflow-y:auto; padding:16px 12px 28px;
+  transform:translateX(-100%); visibility:hidden;
+  transition:transform .25s ease, visibility .25s;
+}
+html.sidebar-open .sidebar{transform:none; visibility:visible;}
+.side-list{list-style:none;}
+.side-link{
+  display:flex; align-items:center; gap:14px; width:100%; padding:8px 14px; border:0; border-radius:999px;
+  background:none; color:var(--ink); text-align:left; text-decoration:none; cursor:pointer;
+  font-family:var(--body); font-size:0.94rem; font-weight:500;
+}
+.side-link:hover{background:rgba(10,10,10,0.07);}
+.side-link.active{background:rgba(0,51,255,0.13); color:var(--accent); font-weight:700;}
+.side-ic{width:24px; height:24px; flex:0 0 24px; border-radius:6px; object-fit:cover;}
+.side-sub{list-style:none; margin:2px 0 6px 38px; padding-left:10px; border-left:1px solid var(--line);}
+.side-sub .side-link{padding:5px 12px; font-size:0.86rem; color:var(--muted);}
+.side-sub .side-link:hover{color:var(--ink);}
+.side-sub .side-link.active{background:none; color:var(--accent); font-weight:700;}
+.side-heading:first-child{margin-top:6px;}
+.side-heading{margin:22px 14px 8px; color:var(--ink); font-family:var(--display); font-weight:700; font-size:0.95rem;}
+.side-backdrop{position:fixed; inset:34px 0 0 0; z-index:55; background:rgba(10,10,10,0.45); display:none;}
+
+[data-shift]{transition:margin-left .25s ease;}
+@media (min-width:1000px){html.sidebar-open [data-shift]{margin-left:260px;}}
+@media (max-width:999px){html.sidebar-open .side-backdrop{display:block;}}
+@media (prefers-reduced-motion:reduce){.sidebar, [data-shift]{transition:none;}}
