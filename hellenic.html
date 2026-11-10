@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hellenic Infographics — Theodoros Drachtidis</title>
+<title>Hellenic Infographics · Theodoros Drachtidis</title>
 <meta name="description" content="@hellenic_infographics: maps and comparison graphics about Greece and beyond, built from open data.">
 <meta name="theme-color" content="#0033FF">
 <link rel="icon" type="image/svg+xml" href="assets/td-favicon.svg">
@@ -47,12 +47,16 @@
       <a class="text-link" href="https://instagram.com/hellenic_infographics" target="_blank" rel="noopener">Follow on Instagram &gt;</a>
     </div>
 
+    <h2>Latest on Instagram</h2>
+    <p class="ig-note mono" id="igStatus">Loading the latest posts…</p>
+    <div class="ig-grid" id="igGrid" aria-live="polite"></div>
+
     <h2>Selected graphics</h2>
     <div class="gallery">
-      <figure><img src="assets/hellenic-startup-index-map.jpg" alt="Euro-Cities Startup Index 2026, ranked map" loading="lazy"><figcaption>Euro-Cities Startup Index 2026 — a ranked map of European startup ecosystems.</figcaption></figure>
-      <figure><img src="assets/hellenic-startup-index-map-alt.jpg" alt="Euro-Cities Startup Index 2026, scaled by rank" loading="lazy"><figcaption>Euro-Cities Startup Index 2026 — same dataset, scaled by rank.</figcaption></figure>
-      <figure><img src="assets/hellenic-startup-index-ranking.jpg" alt="Euro-Cities Startup Index 2026, full ranking" loading="lazy"><figcaption>Euro-Cities Startup Index 2026 — the full city-by-city ranking.</figcaption></figure>
-      <figure><img src="assets/hellenic-greece-shrinking.jpg" alt="Greece is shrinking: population change across Greek regions" loading="lazy"><figcaption>"Greece is shrinking" — a decade of population change across Greek regions.</figcaption></figure>
+      <figure><img src="assets/hellenic-startup-index-map.jpg" alt="Euro-Cities Startup Index 2026, ranked map" loading="lazy"><figcaption>Euro-Cities Startup Index 2026: a ranked map of European startup ecosystems.</figcaption></figure>
+      <figure><img src="assets/hellenic-startup-index-map-alt.jpg" alt="Euro-Cities Startup Index 2026, scaled by rank" loading="lazy"><figcaption>Euro-Cities Startup Index 2026: the same dataset, scaled by rank.</figcaption></figure>
+      <figure><img src="assets/hellenic-startup-index-ranking.jpg" alt="Euro-Cities Startup Index 2026, full ranking" loading="lazy"><figcaption>Euro-Cities Startup Index 2026: the full ranking, city by city.</figcaption></figure>
+      <figure><img src="assets/hellenic-greece-shrinking.jpg" alt="Greece is shrinking: population change across Greek regions" loading="lazy"><figcaption>"Greece is shrinking": a decade of population change across Greek regions.</figcaption></figure>
     </div>
   </div>
 </main>
@@ -64,5 +68,44 @@
   </div>
 </footer>
 
+
+<script>
+  // Latest Instagram posts via Behold (free plan: 6 posts, refreshed once a day).
+  (function(){
+    const FEED = 'https://feeds.behold.so/QoHsaYaHtgr8UXNw8uDb';
+    const grid = document.getElementById('igGrid');
+    const status = document.getElementById('igStatus');
+    const fmt = d => { try { return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); } catch(e){ return ''; } };
+    const firstLine = t => (t || '').split('\n').map(x => x.trim()).find(x => x.replace(/[^\p{L}\p{N}]/gu,'').length > 3) || '';
+    function fail(){
+      status.innerHTML = 'Could not load the feed right now. <a href="https://instagram.com/hellenic_infographics" target="_blank" rel="noopener">See the posts on Instagram &gt;</a>';
+    }
+    fetch(FEED).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
+      const posts = (data.posts || []).filter(p => p.visibility !== 'hidden');
+      if(!posts.length){ fail(); return; }
+      status.textContent = data.followersCount ? (data.followersCount + ' followers · updated daily') : 'Updated daily';
+      posts.forEach(p => {
+        const img = (p.sizes && (p.sizes.medium || p.sizes.small) || {}).mediaUrl || p.thumbnailUrl || p.mediaUrl;
+        const a = document.createElement('a');
+        a.className = 'ig-card'; a.href = p.permalink; a.target = '_blank'; a.rel = 'noopener';
+        const wrap = document.createElement('div'); wrap.className = 'ig-img';
+        const im = document.createElement('img'); im.loading = 'lazy'; im.src = img;
+        const line = firstLine((p.caption || '').replace(/#(\S+)/g, '$1'));
+        im.alt = line || 'Instagram post by @hellenic_infographics';
+        im.onerror = () => { a.remove(); if(!grid.children.length) fail(); };
+        wrap.appendChild(im);
+        if(p.mediaType === 'CAROUSEL_ALBUM'){ const b=document.createElement('span'); b.className='ig-badge mono'; b.textContent='Album'; wrap.appendChild(b); }
+        if(p.mediaType === 'VIDEO'){ const b=document.createElement('span'); b.className='ig-badge mono'; b.textContent='Video'; wrap.appendChild(b); }
+        const cap = document.createElement('div'); cap.className = 'ig-cap';
+        const t = document.createElement('span'); t.className = 'ig-text'; t.textContent = line;
+        const m = document.createElement('span'); m.className = 'ig-meta mono';
+        m.textContent = [fmt(p.timestamp), p.likeCount ? p.likeCount + ' likes' : '', p.commentsCount ? p.commentsCount + ' comments' : ''].filter(Boolean).join(' · ');
+        cap.appendChild(t); cap.appendChild(m);
+        a.appendChild(wrap); a.appendChild(cap);
+        grid.appendChild(a);
+      });
+    }).catch(fail);
+  })();
+</script>
 </body>
 </html>
