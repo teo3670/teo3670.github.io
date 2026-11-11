@@ -25,6 +25,11 @@
       children: [
         { label: 'Privacy policy', href: 'presidentsim-privacy.html' }
       ] },
+    { id: 'dionysos-youth', label: 'Dionysos Youth', href: 'dionysos-youth.html', icon: 'assets/dionysos-youth-council.png',
+      pages: ['dionysos-youth.html', 'dionysos-youth-privacy.html'],
+      children: [
+        { label: 'Privacy policy', href: 'dionysos-youth-privacy.html' }
+      ] },
     { id: 'hellenic', label: 'Hellenic Infographics', href: 'hellenic.html', icon: 'assets/hellenic-logo.jpg', pages: ['hellenic.html'] }
   ];
 
