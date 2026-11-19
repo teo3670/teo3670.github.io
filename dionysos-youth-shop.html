@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κάρτα Νέων — Συνεργαζόμενο κατάστημα</title>
+<meta name="description" content="Οι προσφορές του καταστήματος για την Κάρτα Νέων του Δήμου Διονύσου, στην εφαρμογή Dionysos Youth.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="assets/td-favicon.svg">
+<style>
+  :root{--navy:#123260; --teal:#187384; --green:#577A2A; --gold:#EFAD32; --ink:#020618; --muted:#566577; --bg:#F3F7FB; --card:#FFFFFF; --line:#E2E8F0;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){--ink:#E6EDF5; --muted:#9AA8BA; --bg:#0E1626; --card:#16213A; --line:#28374F;}
+  }
+  *{box-sizing:border-box; margin:0;}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:16px;}
+  .hero{width:100%; max-width:440px; border-radius:24px; padding:28px 22px; color:#F7FBFD; background:linear-gradient(135deg,var(--navy) 0%,var(--teal) 55%,var(--green) 100%); text-align:center;}
+  .eyebrow{font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.9;}
+  h1{font-size:1.7rem; line-height:1.15; margin:10px 0 8px;}
+  .hero p{opacity:.92; line-height:1.45;}
+  .code{display:inline-block; margin-top:14px; font-size:1.3rem; font-weight:700; letter-spacing:.2em; color:var(--gold);}
+  .card{width:100%; max-width:440px; margin-top:16px; background:var(--card); border:1px solid var(--line); border-radius:24px; padding:22px; display:flex; flex-direction:column; gap:12px;}
+  .btn{display:block; text-align:center; text-decoration:none; font-weight:700; font-size:1.05rem; border-radius:999px; padding:15px 18px; min-height:48px;}
+  .primary{background:var(--navy); color:#F7FBFD;}
+  .ghost{border:2px solid var(--navy); color:var(--ink);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ghost{border-color:#9BB7E6;} }
+  .note{font-size:.9rem; color:var(--muted); line-height:1.45;}
+  .error{display:none;}
+  footer{margin-top:20px; font-size:.8rem; color:var(--muted); text-align:center;}
+  footer a{color:inherit;}
+</style>
+</head>
+<body>
+  <section class="hero">
+    <div class="eyebrow">Κάρτα Νέων · Δήμος Διονύσου</div>
+    <h1>Συνεργαζόμενο κατάστημα</h1>
+    <p>Δες τις προσφορές του καταστήματος και εξαργύρωσε τα credits σου στην εφαρμογή Dionysos Youth.</p>
+    <div class="code" id="code" aria-label="Κωδικός καταστήματος"></div>
+  </section>
+
+  <section class="card" id="actions">
+    <a class="btn primary" id="open" href="#">Άνοιγμα στην εφαρμογή</a>
+    <a class="btn ghost" href="https://play.google.com/store/apps/details?id=com.theodorosaueb.dionysosyouth">Δεν την έχεις; Κατέβασέ τη</a>
+    <p class="note">Αν η εφαρμογή δεν ανοίξει, άνοιξέ τη μόνος σου: Προσφορές → «Σάρωση QR καταστήματος» → γράψε τον κωδικό του καταστήματος.</p>
+  </section>
+
+  <section class="card error" id="invalid">
+    <p>Αυτός ο σύνδεσμος δεν έχει έγκυρο κωδικό καταστήματος.</p>
+    <a class="btn ghost" href="dionysos-youth.html">Η εφαρμογή Dionysos Youth</a>
+  </section>
+
+  <footer><a href="dionysos-youth.html">Dionysos Youth</a> · <a href="dionysos-youth-privacy.html">Πολιτική απορρήτου</a></footer>
+
+<script>
+  // The shop's QR points here with ?c=CODE (6 characters). Only that exact shape is used.
+  (function () {
+    var raw = new URLSearchParams(location.search).get('c') || '';
+    var code = raw.toUpperCase().replace(/[\s-]/g, '');
+    if (!/^[A-HJKMNP-Z2-9]{6}$/.test(code)) {
+      document.getElementById('actions').style.display = 'none';
+      document.getElementById('invalid').style.display = 'flex';
+      return;
+    }
+    document.getElementById('code').textContent = code.slice(0, 3) + '-' + code.slice(3);
+    var appLink = 'dionysosyouth://shop/' + code;
+    document.getElementById('open').href = appLink;
+    // Try the app straight away; the buttons stay for when the browser does not allow it.
+    setTimeout(function () { location.href = appLink; }, 300);
+  })();
+</script>
+</body>
+</html>
