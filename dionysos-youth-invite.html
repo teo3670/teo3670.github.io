@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Πρόσκληση στο Dionysos Youth</title>
+<meta name="description" content="Ένας φίλος σε προσκαλεί στο Dionysos Youth, την εφαρμογή του Συμβουλίου Νέων Δήμου Διονύσου. Με τον κωδικό του παίρνετε και οι δύο credits.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Έλα στο Dionysos Youth">
+<meta property="og:description" content="Με τον κωδικό πρόσκλησης παίρνετε και οι δύο 20 credits μόλις έρθεις στην πρώτη σου δράση.">
+<link rel="icon" type="image/svg+xml" href="assets/td-favicon.svg">
+<style>
+  :root{--navy:#123260; --teal:#187384; --green:#577A2A; --gold:#EFAD32; --ink:#020618; --muted:#566577; --bg:#F3F7FB; --card:#FFFFFF; --line:#E2E8F0;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){--ink:#E6EDF5; --muted:#9AA8BA; --bg:#0E1626; --card:#16213A; --line:#28374F;}
+  }
+  *{box-sizing:border-box; margin:0;}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:16px;}
+  .hero{width:100%; max-width:440px; border-radius:24px; padding:28px 22px; color:#F7FBFD; background:linear-gradient(135deg,var(--navy) 0%,var(--teal) 55%,var(--green) 100%); text-align:center;}
+  .eyebrow{font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.9;}
+  h1{font-size:1.7rem; line-height:1.15; margin:10px 0 8px;}
+  .hero p{opacity:.92; line-height:1.45;}
+  .codebox{margin-top:16px; border-radius:16px; padding:12px; background:rgba(255,255,255,.16);}
+  .codelabel{font-size:.85rem; opacity:.9;}
+  .code{font-size:1.7rem; font-weight:700; letter-spacing:.18em; color:var(--gold); margin-top:2px; font-variant-numeric:tabular-nums;}
+  .copy{margin-top:10px; font:inherit; font-weight:700; font-size:.95rem; color:var(--navy); background:#F7FBFD; border:0; border-radius:999px; padding:10px 18px; min-height:44px; cursor:pointer;}
+  .card{width:100%; max-width:440px; margin-top:16px; background:var(--card); border:1px solid var(--line); border-radius:24px; padding:22px; display:flex; flex-direction:column; gap:12px;}
+  .btn{display:block; text-align:center; text-decoration:none; font-weight:700; font-size:1.05rem; border-radius:999px; padding:15px 18px; min-height:48px;}
+  .primary{background:var(--navy); color:#F7FBFD;}
+  .ghost{border:2px solid var(--navy); color:var(--ink);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ghost{border-color:#9BB7E6;} }
+  h2{font-size:1.05rem;}
+  ol{padding-left:1.2em; display:flex; flex-direction:column; gap:6px; line-height:1.45;}
+  .note{font-size:.9rem; color:var(--muted); line-height:1.45;}
+  .note a{color:inherit;}
+  .error{display:none;}
+  footer{margin-top:20px; font-size:.8rem; color:var(--muted); text-align:center;}
+  footer a{color:inherit;}
+</style>
+</head>
+<body>
+  <section class="hero">
+    <div class="eyebrow">Συμβούλιο Νέων · Δήμος Διονύσου</div>
+    <h1>Ένας φίλος σε καλεί στο Dionysos Youth</h1>
+    <p>Πάρε μέρος σε δράσεις, μάζεψε credits και εξαργύρωσέ τα σε καταστήματα της γειτονιάς σου. Με αυτόν τον κωδικό παίρνετε και οι δύο <strong>20 credits</strong> μόλις έρθεις στην πρώτη σου δράση.</p>
+    <div class="codebox" id="codebox">
+      <div class="codelabel">Κωδικός πρόσκλησης</div>
+      <div class="code" id="code"></div>
+      <button class="copy" id="copy" type="button">Αντιγραφή κωδικού</button>
+    </div>
+  </section>
+
+  <section class="card" id="actions">
+    <a class="btn primary" id="open" href="#">Έχω την εφαρμογή: άνοιγμα</a>
+    <a class="btn ghost" href="https://play.google.com/store/apps/details?id=com.theodorosaueb.dionysosyouth">Κατέβασέ τη (Android)</a>
+    <p class="note">Για iPhone, δες <a href="dionysos-youth.html">τη σελίδα της εφαρμογής</a>.</p>
+    <h2>Αν δεν την έχεις ακόμα</h2>
+    <ol>
+      <li>Κατέβασε την εφαρμογή και πάτησε «Εγγραφή».</li>
+      <li>Στο πεδίο «Κωδικός πρόσκλησης φίλου» γράψε τον κωδικό πιο πάνω (ή ξαναπάτα αυτόν τον σύνδεσμο αφού την εγκαταστήσεις, και θα συμπληρωθεί μόνος του).</li>
+      <li>Έλα στην πρώτη σου δράση και δείξε την κάρτα σου στην είσοδο.</li>
+    </ol>
+    <p class="note">Αν έχεις ήδη λογαριασμό, μπορείς να βάλεις τον κωδικό μέσα σε 7 μέρες από την εγγραφή σου: Πορτοφόλι → «Κάλεσε φίλους».</p>
+  </section>
+
+  <section class="card error" id="invalid">
+    <p>Αυτός ο σύνδεσμος δεν έχει έγκυρο κωδικό πρόσκλησης. Ζήτα από τον φίλο σου να σου τον ξαναστείλει.</p>
+    <a class="btn ghost" href="dionysos-youth.html">Η εφαρμογή Dionysos Youth</a>
+  </section>
+
+  <footer><a href="dionysos-youth.html">Dionysos Youth</a> · <a href="dionysos-youth-privacy.html">Πολιτική απορρήτου</a></footer>
+
+<script>
+  // The invite link carries ?c=CODE: the inviter's 8-character member code. Only that
+  // exact shape is used, and only as text.
+  (function () {
+    var raw = new URLSearchParams(location.search).get('c') || '';
+    var code = raw.toUpperCase().replace(/[\s-]/g, '');
+    if (!/^[A-Z0-9]{8}$/.test(code)) {
+      document.getElementById('codebox').style.display = 'none';
+      document.getElementById('actions').style.display = 'none';
+      document.getElementById('invalid').style.display = 'flex';
+      return;
+    }
+    var shown = code.slice(0, 4) + ' ' + code.slice(4);
+    document.getElementById('code').textContent = shown;
+    document.getElementById('open').href = 'dionysosyouth://invite/' + code;
+
+    var copy = document.getElementById('copy');
+    copy.addEventListener('click', function () {
+      var done = function () { copy.textContent = 'Αντιγράφηκε ✓'; };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(done, function () { copy.textContent = shown; });
+      } else {
+        copy.textContent = shown;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
